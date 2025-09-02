@@ -9,6 +9,7 @@ public class Zinssatz {
         double zinsatz = input.nextDouble();
         double zinsen = altes_kapital * zinsatz / 100;
         double neues_kapital = altes_kapital + zinsen;
+
         System.out.println("Altes kapital: " + altes_kapital + "€");
         System.out.println("Zinsatz: " + zinsatz + "%");
         System.out.println();

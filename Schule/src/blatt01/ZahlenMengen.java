@@ -6,6 +6,7 @@ public class ZahlenMengen {
         double b = 5;
         a /= 2;
         b /= 2;
+
         System.out.println(a);
         System.out.println(b);
     }

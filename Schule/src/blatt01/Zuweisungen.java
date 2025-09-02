@@ -9,6 +9,7 @@ public class Zuweisungen {
         a -= 8;
         a /= 2;
         a -= b * 2;
+
         System.out.println(a);
     }
 }

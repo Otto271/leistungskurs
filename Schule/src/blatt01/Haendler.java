@@ -9,6 +9,7 @@ public class Haendler {
         double mini_menge = 5;
         double micro_menge = 0;
         double gesamt = sd_preis * sd_menge + mini_preis * mini_menge + micro_preis * micro_menge;
+
         System.out.println("Der Preis für...");
         System.out.println(sd_menge + "normale SD-Karten");
         System.out.println(mini_menge + "MiniSD-Karten");

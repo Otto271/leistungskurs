@@ -17,7 +17,12 @@ public class TypKonversion {
         int g = (int) e;
         char h = (char) f;
 
-        System.out.println(g);
+        System.out.println(f);
         System.out.println(h);
+
+        /*
+        boolean t = true;
+        h = (char) t;
+         */
     }
 }

@@ -42,7 +42,12 @@ public class Haendler {
             gesamt = sd_preis * sd_menge + mini_preis * mini_menge + micro_preis * micro_menge;
             double rabatt = gesamt * 0.15;
             double preis = gesamt - rabatt;
-            System.out.println("Sie Kriegen");
+            System.out.println("Sie bekommen einen Rabatt von 15%!");
+            System.out.println("Der Preis für...");
+            System.out.println(sd_menge + " normale SD-Karten");
+            System.out.println(mini_menge + " MiniSD-Karten");
+            System.out.println(micro_menge + " MicroSD-Karten");
+            System.out.println("...lautet " + preis + " €");
         }else {
             gesamt = sd_preis * sd_menge + mini_preis * mini_menge + micro_preis * micro_menge;
             System.out.println("Der Preis für...");

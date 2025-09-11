@@ -18,12 +18,12 @@ public class ETF {
         while (jahr <= jahr_max) { //falls das Jahr tiefer ist als das eingegebene Jahr wird die Schleife ausgeführt
             System.out.println("Wieviel wollen Sie dieses Jahr monatlich anlegen?");
             sparbetrag = input.nextDouble(); //Sparbetrag wird für jedes jahr neu abgefragt
-            while (monat <= 12) { //wenn tiefer gleich 12 ist geht in die klammer
+            while (monat <= 12) { //wenn tiefer gleich 12 ist geht in die schleife
                 zinssatz = rand.nextDouble();
                 if (zinssatz < 0.5) { //Zinssatz wird errechnet
-                    zinssatz *= 24;
+                    zinssatz = zinssatz * 24;
                 } else if (zinssatz > 0.5) {
-                    zinssatz *= 12;
+                    zinssatz = zinssatz * 12;
                 }
                 spar_gesamt += sparbetrag; //alle rechnungen
                 kontostand = spar_gesamt * (zinssatz / 100 + 1);

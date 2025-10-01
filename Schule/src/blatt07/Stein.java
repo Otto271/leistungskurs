@@ -1,4 +1,4 @@
-package blatt07;
+/*package blatt07;
 
 public class Stein {
     public static int steinGGT(int a, int b){
@@ -26,3 +26,4 @@ public class Stein {
         }
     }
 }
+*/

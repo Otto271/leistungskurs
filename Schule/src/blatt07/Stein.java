@@ -1,6 +1,12 @@
 package blatt07;
 
 public class Stein {
+     /**
+     * Diese Funktion findet den Größten gemeinsamen Teiler zweier Zahlen
+     * @param a Erste Zahl
+     * @param b Zweite Zahl
+     * @return größter gemeinsame Teiler
+     */
     public static double steinGGT(int a, int b){
         int k = 0;
         double ggt = 0;

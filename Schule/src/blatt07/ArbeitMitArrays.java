@@ -140,7 +140,7 @@ public class ArbeitMitArrays {
     }
 
     /**
-     *a
+     * Diese Funktion verschiebt alle Zahlen in einem Array nach Rechts und setzt die erste Zahl auf 0
      * @param arr
      * @return
      */

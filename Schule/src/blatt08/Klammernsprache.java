@@ -1,6 +1,11 @@
 package blatt08;
 
 public class Klammernsprache {
+    /**
+     * Diese Funktion erkennt ob ein Wort Klammersprache ist oder nicht
+     * @param s String
+     * @return true/false (Klammersprache/keine Klammersprache)
+     */
     public static boolean istKlammerwort(String s) {
         char[] charArray = s.toCharArray();
         int a = 0;

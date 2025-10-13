@@ -1,6 +1,11 @@
 package blatt08;
 
 public class Palindrom {
+    /**
+     * Diese Funktion gibt den gegebene String umgedreht zurück
+     * @param s String
+     * @return Umgedrehter String
+     */
     public static String umdrehen(String s){
         char[] arr = s.toCharArray();
         int len = arr.length;
@@ -12,6 +17,12 @@ public class Palindrom {
         String palindromStr = new String(palindrom);
         return palindromStr;
     }
+
+    /**
+     * Diese Funktion überprüft ob ein String ein Palindrom ist
+     * @param s String
+     * @return true/false (ist ein Palindrom/ist kein Palindrom)
+     */
     public static boolean istPalindrom(String s){
         String palindromStr = umdrehen(s);
         if (s.equals(palindromStr)){

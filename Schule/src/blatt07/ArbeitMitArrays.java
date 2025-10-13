@@ -1,6 +1,10 @@
 package blatt07;
 
 public class ArbeitMitArrays {
+    /**
+     * Diese Methode gibt alle zahlen innerhalb eines Arrays aus
+     * @param arr Array der ausgegeben wird
+     */
     public static void printArray(int[] arr) {
         System.out.print("[ ");
         for (int i = 0; i < arr.length; i++) {
@@ -8,6 +12,11 @@ public class ArbeitMitArrays {
         }
         System.out.println(" ]");
     }
+
+    /**
+     * Diese Methode gibt alle zahlen innerhalb eines Arrays aus
+     * @param arr array der ausgegeben wird
+     */
     public static void printArray(double[] arr) {
         System.out.print("[ ");
         for (int i = 0; i < arr.length; i++) {
@@ -15,6 +24,11 @@ public class ArbeitMitArrays {
         }
         System.out.println(" ]");
     }
+
+    /**
+     * Diese Methode gibt alle boolean werte innerhalb eines arrays aus
+     * @param arr array der ausgegeben wird
+     */
     public static void printArray(boolean[] arr) {
         System.out.println("[ ");
         for (int i = 0; i < arr.length; i++) {
@@ -22,6 +36,11 @@ public class ArbeitMitArrays {
         }
         System.out.println(" ]");
     }
+
+    /**
+     * Diese Methode gibt alle char werte innerhalb eines arrays aus
+     * @param arr array der ausgegeben wird
+     */
     public static void printArray(char[] arr) {
         System.out.println("[ ");
         for (int i = 0; i < arr.length; i++) {
@@ -29,6 +48,11 @@ public class ArbeitMitArrays {
         }
         System.out.println(" ]");
     }
+
+    /**
+     * Diese Methode gibt alle Strings innerhalb eines Arrays aus
+     * @param arr Array der ausgegeben wird
+     */
     public static void printArray(String[] arr) {
         System.out.println("[ ");
         for (int i = 0; i < arr.length; i++) {
@@ -36,6 +60,12 @@ public class ArbeitMitArrays {
         }
         System.out.println(" ]");
     }
+
+    /**
+     * Diese Funktion sagt dir ob der gegebene Array sortiert ist oder nicht
+     * @param arr Gegebener Array
+     * @return Gibt zurück ob sortiert oder nicht
+     */
     public static boolean istSortiert(int[] arr){
         boolean a = false;
         for (int i = 0; i < arr.length - 1; i++) {
@@ -48,6 +78,13 @@ public class ArbeitMitArrays {
         }
         return a;
     }
+
+    /**
+     * Diese Funktion addiert zwei gegebene Arrays
+     * @param arr_1 erster Summand
+     * @param arr_2 zweiter Summand
+     * @return Gibt das Ergebnis (arr_3) zurück
+     */
     public static int[] addieren(int[] arr_1, int[] arr_2) {
         int[] arr_3 = new int[arr_1.length];
         if (arr_1.length < arr_2.length){
@@ -74,6 +111,12 @@ public class ArbeitMitArrays {
         }
         return arr_3;
     }
+
+    /**
+     * Diese Funktion verschiebt alle Zahlen inerhalb eines Arrays nach Links
+     * @param arr Array der verschoben wird
+     * @return Gibt den verschobenen Arrray zurück
+     */
     public static int[] shiftLeft(int[] arr){
         int a = arr[0];
         for (int i = 0; i < arr.length; i++) {
@@ -82,6 +125,12 @@ public class ArbeitMitArrays {
         arr[arr.length - 1] = a;
         return arr;
     }
+
+    /**
+     * Diese Funktion verschiebt alle Zahlen in einem Array nach Links und macht die letzte Zahl zu einer 0
+     * @param arr Array der verschoben wird
+     * @return Gibt den Verschobenen Array zurück
+     */
     public static int[] shiftLeftAbsolute(int[] arr){
         for (int i = 0; i < arr.length; i++) {
             arr[i] = arr[i++];
@@ -89,6 +138,12 @@ public class ArbeitMitArrays {
         arr[arr.length - 1] = 0;
         return arr;
     }
+
+    /**
+     *
+     * @param arr
+     * @return
+     */
     public static int[] shiftRightAbsolute(int[] arr){
         for (int i = arr.length; i > 0; i--) {
             arr[i] = arr[i--];

@@ -41,7 +41,6 @@ public class Zahlensysteme {
     }
     public static int zuDezimal(String s) {
         int dezimal = 0;
-        int binär = 1;
         if (istDezimal(s)){
             dezimal = Integer.parseInt(s);
             return dezimal;

@@ -26,9 +26,9 @@ public class Kalender {
             monat++;
             return zuDatum(tag, monat, jahr);
         } else if (tag == 31 && monat == 12) {
+            tag = 01;
             jahr++;
             monat = 01;
-            tag = 01;
             return zuDatum(tag, monat, jahr);
         } else if (((monat == 1 || monat == 3 || monat == 5 || monat == 7 || monat == 8 || monat == 10) && tag == 31) || ((monat == 4 || monat == 6 || monat == 9 || monat == 11) && tag == 30)) {
             monat++;

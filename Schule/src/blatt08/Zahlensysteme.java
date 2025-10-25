@@ -4,7 +4,7 @@ public class Zahlensysteme {
     /**
      * Diese Funktion prüft ob die angegebene Zahl in Dezimal schreibweise geschrieben wurde
      * @param s Zahl
-     * @return
+     * @return true wenn es eine Dezimalzahl ist, false wenn nicht
      */
     public static boolean istDezimal(String s){
         for (int i = 0; i < s.length(); i++){
@@ -14,6 +14,11 @@ public class Zahlensysteme {
         }
         return true;
     }
+    /**
+     * Diese Funktion prüft ob die angegebene Zahl in Binär schreibweise geschrieben wurde
+     * @param s Zahl
+     * @return true wenn es eine Binärzahl ist, false wenn nicht
+     */
     public static boolean istBinär(String s) {
         if (s.startsWith("(") && s.endsWith(")2")) {
             String binär_zahl = s.substring(1, s.length() - 2);
@@ -26,9 +31,14 @@ public class Zahlensysteme {
         }
         return false;
     }
+    /**
+     * Diese Funktion prüft ob die angegebene Zahl in Hexadezimal schreibweise geschrieben wurde
+     * @param s Zahl
+     * @return true wenn es eine Hexadezimalzahl ist, false wenn nicht
+     */
     public static boolean istHexadezimal(String s){
         if (s.startsWith("(") && s.endsWith(")16")) {
-            String hex_zahl = s.substring(1, s.length() - 3);
+            String hex_zahl = s.substring(1, s.length() - 2);
             for (int i = 0; i < hex_zahl.length(); i++) {
                 char c = hex_zahl.charAt(i);
                 if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'))) {
@@ -39,24 +49,22 @@ public class Zahlensysteme {
         }
         return false;
     }
-    public static int zuDezimal(String s) {
-        int dezimal = 0;
-        if (istDezimal(s)){
-            dezimal = Integer.parseInt(s);
-            return dezimal;
-        } else if (istBinär(s)) {
+
+    /**
+     * Überprüft in welcher Schreibweise die Zahl ist und wandelt sie dann in Dezimalschreibweise
+     * @param s Zahl
+     * @return Die Zahl umgewandelt als integer
+     */
+    public static int zuDezimal(String s){
+        if (istBinär(s)){
             String zahl = s.substring(1, s.length() - 2);
-            dezimal = Integer.parseInt(zahl, 2);
-            return dezimal;
-        }else if (istHexadezimal(s)){
+            return Integer.parseInt(zahl);
+        } else if (istHexadezimal(s)) {
             String zahl = s.substring(1, s.length() - 3);
-            dezimal = Integer.parseInt(zahl, 16);
-            return dezimal;
+            return Integer.parseInt(zahl);
+        }else if (istDezimal(s)){
+            return Integer.parseInt(s);
         }
-        System.out.println("i");
         return 0;
-    }
-    public static void main(String[] args) {
-        System.out.println(zuDezimal("(1010101111000001001000111010)2"));
     }
 }

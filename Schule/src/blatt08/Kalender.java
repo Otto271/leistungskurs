@@ -1,20 +1,45 @@
 package blatt08;
 
 public class Kalender {
+    /**
+     * Diese Funktion bekommt ein Datum und gibt dann den Tag als Integer zurück
+     * @param datum (__.__.____)
+     * @return Tag als Integer
+     */
     public static int getTag(String datum) {
         String tag_string = datum.substring(0, 2);
         int tag = Integer.parseInt(tag_string);
         return tag;
     }
+
+    /**
+     * Diese Funktion schaut ob das Jahr ein Schaltjahr ist
+     * @param jahr als integer
+     * @return true wenn es ein Schaltjahr ist, false wenn es keins ist
+     */
     public static boolean istSchaltjahr(int jahr) {
         if (jahr % 400 == 0 || (jahr % 4 == 0 && jahr % 100 != 0)) {
             return true;
         }
         return false;
     }
+
+    /**
+     * Diese Funktion bekommt Tag, Monat und Jahr als integer angegeben und wandelt es in einen String um
+     * @param tag als Integer
+     * @param monat als Integer
+     * @param jahr als Integer
+     * @return Datum als String (__.__.____)
+     */
     public static String zuDatum(int tag, int monat, int jahr) {
         return tag + "." + monat + "." + jahr;
     }
+
+    /**
+     * Diese Funktion kriegt ein Datum und gibt das Datum vom nächsten Tag wieder
+     * @param datum (__.__.____)
+     * @return Datum als String (__.__.____)
+     */
     public static String naechsterTag(String datum) {
         int tag = getTag(datum);
         String monatString = datum.substring(3, 5);

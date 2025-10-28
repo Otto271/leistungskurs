@@ -58,10 +58,10 @@ public class Zahlensysteme {
     public static int zuDezimal(String s){
         if (istBinär(s)){
             String zahl = s.substring(1, s.length() - 2);
-            return Integer.parseInt(zahl);
+            return Integer.parseInt(zahl, 2);
         } else if (istHexadezimal(s)) {
             String zahl = s.substring(1, s.length() - 3);
-            return Integer.parseInt(zahl);
+            return Integer.parseInt(zahl, 16);
         }else if (istDezimal(s)){
             return Integer.parseInt(s);
         }

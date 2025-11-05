@@ -40,7 +40,6 @@ public class Primzahlen {
     }
 
     public static void primfaktorzerlegung(int n) {
-        int[] arr = generierePrimzahlen(n);
         int[] arr_2 = new int[n];
         int i = 0;
         while (true) {

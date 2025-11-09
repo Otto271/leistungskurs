@@ -57,15 +57,21 @@ public class Aufwand {
             }
         }
         System.out.println(o + " " + b);
+        System.out.println(charr2.length);
+        System.out.println(charr.length);
         return charr2;
 
     }
 
     public static void main(String[] args) {
         String eingabe = "Nussecken (1 Blech). Teig: 300g Mehl, 1 TL Backpulver, 130g Zucker, 1 Pkg Vanillezucker, 2 EL Leinsamen, 6 EL Wasser, 130g Margarine/Butter. Belag: 200g Margarine/Butter, 6 EL Wasser, 200g Zucker, 1 Pkg Vanillezucker, 400g gemahlene Haselnüsse/Mandeln. Außerdem: Erdbeer-/Himbeermarmelade, 100g Zartbitterschokolade. Schritte: Die Leinsamen in 6 EL Wasser aufquellen lassen. Alle Zutaten für den Teig vermischen und zu einem relativ weichen Teig zerkneten, dann auf einem mit Backpapier ausgelegten Backbleck dünn drücken. Marmelade dünn auf dem Teig verteilen. Margarine, Wasser, Zucker und Vanillezucker in einem Topf schmelzen und kurz aufkochen lassen, dann Nüsse dazugeben und alles vermischen. Belag auf der Marmelade verteilen. Im vorgeheizten Backofen bei 180° C Ober/Unterhitze oder 160° C Umluft ca. 30 Minuten backen. Glasur erwärmen und mit einem Löffel über das Blech sprenkeln (so wird es gleichmäßiger und geht schneller als die Ecken in Schokolade zu tunken), abkühlen lassen. Zu Ecken schneiden. ";
+        System.out.println(eingabe.length());
         char[] ausgabe = umbrueche(eingabe);
         System.out.println(eingabe);
         System.out.println(ausgabe);
     }
-    //b) 2022 Bedingungen, 2022 Operationen
+    //b) 2089 Bedingungen, 5102 Operationen
+    //c) 8049 Bytes
+    //d) Ist Instabil, weil kleine Fehler einen Großen unterschied machen
+    //e) Best Case wenn String 0 Char und worst case wenn String n char hat
 }

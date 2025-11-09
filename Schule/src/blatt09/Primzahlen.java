@@ -40,17 +40,21 @@ public class Primzahlen {
     }
 
     public static void primfaktorzerlegung(int n) {
-        int[] arr_2 = new int[n];
-        int i = 0;
-        while (true) {
-            if (n %  arr[i] == 0) {
-                arr_2[i] = arr[i];
+        System.out.print(n + " = ");
+        while (!istPrim(n)) {
+            int[] arr = Teiler.teiler(n);
+            for (int i = 0; i < arr.length; i++) {
+                if (istPrim(arr[i])) {
+                    System.out.print(arr[i] + " * ");
+                    n = n / arr[i];
+                    break;
+                }
             }
-            i++;
         }
+        System.out.print(n + " ");
     }
     public static void main(String[] args) {
-        int[] arr = generierePrimzahlen(10);
-        System.out.println(Arrays.toString(arr));
+        int[] test = generierePrimzahlen(10);
+        System.out.println(Arrays.toString(test));
     }
 }

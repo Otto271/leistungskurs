@@ -25,7 +25,6 @@ public class DNA {
         }
         return result;
     }
-    public static
     public static void main(String[] args) {
         System.out.println(istDNA("ATGCGCG"));
     }

@@ -76,6 +76,15 @@ public class MultiArrays {
         }
         return true;
     }
+    public static char[][] copy2DCharArray(char[][] arr) {
+        char[][] arr2 = new char[arr.length][ arr[0].length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                arr2[i][j] = arr[i][j];
+            }
+        }
+        return arr2;
+    }
     public static int[][] shiftRows(int[][] arr, int n, int m) {
         for (int j = 0; j < m; j++) {
             int temp = arr[n][0];

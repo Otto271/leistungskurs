@@ -87,6 +87,6 @@ public class PenAndPaper {
     }
 
     public static void main(String[] args) {
-        System.out.println(wuerfel(2, 20));
+        System.out.println(angriff(1, 20, true, false, 2, 14, 10));
     }
 }

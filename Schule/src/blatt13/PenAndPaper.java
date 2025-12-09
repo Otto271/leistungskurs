@@ -78,8 +78,8 @@ public class PenAndPaper {
         int schaden;
         if (check(treffer, vorteil, nachteil)) {
             schaden = wuerfel(menge, wuerfel);
-            if (schaden > rüstung) {
-                schaden += bonus;
+            if (check(rüstung, vorteil, nachteil)) {
+                schaden *= bonus;
             }
             return schaden;
         }

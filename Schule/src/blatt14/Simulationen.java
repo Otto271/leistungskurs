@@ -75,4 +75,132 @@ public class Simulationen {
         }
         return ost;
     }
+    public static char getNordWest (char[][] arr, int posx, int posy, boolean rand) {
+        if (posx == 0) {
+            if (!rand) {
+                return '-';
+            } else {
+                posx = arr.length-1;
+            }
+        } else {
+            posx--;
+        }
+        if (posy == 0) {
+            if (!rand) {
+                return '-';
+            } else {
+                posy = arr[0].length-1;
+            }
+        } else  {
+            posy--;
+        }
+        return arr[posx][posy];
+    }
+    public static char getNordOst (char[][] arr, int posx, int posy, boolean rand) {
+        if (posx == arr.length-1) {
+            if (!rand) {
+                return '-';
+            } else {
+                posx = 0;
+            }
+        } else {
+            posx++;
+        }
+        if (posy == 0) {
+            if (!rand) {
+                return '-';
+            } else {
+                posy = arr[0].length-1;
+            }
+        } else  {
+            posy--;
+        }
+        return arr[posx][posy];
+    }
+    public static char getSuedWest (char[][] arr, int posx, int posy, boolean rand) {
+        if (posx == 0) {
+            if (!rand) {
+                return '-';
+            } else {
+                posx = arr.length-1;
+            }
+        } else {
+            posx--;
+        }
+        if (posy == arr[0].length-1) {
+            if (!rand) {
+                return '-';
+            } else {
+                posy = 0;
+            }
+        } else  {
+            posy++;
+        }
+        return arr[posx][posy];
+    }
+    public static char getSuedOst (char[][] arr, int posx, int posy, boolean rand) {
+        if (posx == arr.length-1) {
+            if (!rand) {
+                return '-';
+            } else {
+                posx = 0;
+            }
+        } else  {
+            posx++;
+        }
+        if (posy == arr[0].length-1) {
+            if (!rand) {
+                return '-';
+            } else {
+                posy = 0;
+            }
+        } else {
+            posy++;
+        }
+        return arr[posx][posy];
+    }
+    public static int zaehlenVier (char[][] arr, int posx, int posy, boolean rand, char suche) {
+        int menge = 0;
+        if (getNorden(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getSueden(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getWesten(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getOsten(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        return menge;
+    }
+    public static int zaehlenAcht(char[][] arr, int posx, int posy, boolean rand, char suche) {
+        int menge = 0;
+        if (getNorden(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getSueden(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getWesten(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getOsten(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getNordWest(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getSuedWest(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getNordOst(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        if (getSuedOst(arr, posx, posy, rand) == suche) {
+            menge++;
+        }
+        return menge;
+    }
 }

@@ -79,14 +79,41 @@ public class PenAndPaper {
         if (check(treffer, vorteil, nachteil)) {
             schaden = wuerfel(menge, wuerfel);
             if (check(rüstung, vorteil, nachteil)) {
-                schaden *= bonus;
+                schaden += bonus;
             }
             return schaden;
         }
         return -1;
     }
-
     public static void main(String[] args) {
-        System.out.println(angriff(1, 20, true, false, 2, 14, 10));
+        for (int i = 0; i < 100; i++) {
+            int lebenA = 70;
+            int lebenB = 42;
+            int rüstungA = 14;
+            int rüstungB = 10;
+            int bonusA = 1;
+            int bonusB = 2;
+            boolean vorteilB = true;
+            boolean nachteilA = true;
+            int länge = 3;
+            while (true) {
+                lebenA -= angriff(1, 6, vorteilB, false, bonusB, rüstungA, 12);
+                if (lebenA <= 0) {
+                    System.out.println("Bard");
+                    break;
+                }
+                lebenB -= angriff(1, 8, false, nachteilA, bonusA, rüstungB, 12);
+                if (lebenB <= 0) {
+                    System.out.println("Barbar");
+                    break;
+                }
+                lebenB -= wuerfel(1, 10);
+                länge--;
+                if (länge == 0) {
+                    vorteilB = false;
+                    nachteilA = false;
+                }
+            }
+        }
     }
 }

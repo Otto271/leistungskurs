@@ -40,38 +40,46 @@ public class Simulationen {
         return arr;
     }
     public static char getNorden (char[][] arr, int posx, int posy, boolean rand) {
-        char nord;
-        if (!rand && posy != 0) {
+        char nord = 0;
+        if (posy != 0) {
             nord = arr[posx][posy-1];
-        } else {
+        } else if (rand) {
             nord = arr[posx][arr[0].length-1];
+        } else {
+            nord = arr[posx][posy];
         }
         return nord;
     }
     public static char getSueden (char[][] arr, int posx, int posy, boolean rand) {
         char sued;
-        if (!rand && posy != arr[0].length-1) {
+        if (posy != arr[0].length-1) {
             sued = arr[posx][posy+1];
-        } else {
+        } else if (rand) {
             sued = arr[posx][0];
+        } else {
+            sued = arr[posx][posy];
         }
         return sued;
     }
     public static char getWesten (char[][] arr, int posx, int posy, boolean rand) {
         char west;
-        if (!rand && posx != arr.length-1) {
-            west = arr[posx+1][posy];
-        } else {
-            west = arr[0][posy];
+        if (posx != 0) {
+            west = arr[posx-1][posy];
+        } else if (rand) {
+            west = arr[arr.length-1][posy];
+        }  else {
+            west = arr[posx][posy];
         }
         return west;
     }
     public static char getOsten(char[][] arr, int posx, int posy, boolean rand) {
         char ost;
-        if (!rand && posx != 0) {
-            ost = arr[posx-1][posy];
+        if (posx != arr.length-1) {
+            ost = arr[posx+1][posy];
+        } else if (rand) {
+            ost = arr[0][posy];
         } else {
-            ost = arr[arr.length-1][posy];
+            ost = arr[posx][posy];
         }
         return ost;
     }

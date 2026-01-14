@@ -67,7 +67,13 @@ public class MultiArrays {
         return arr;
     }
     public static boolean istIdentisch(char[][] arr, char[][] arr2) {
+        if (arr.length != arr2.length) {
+            return false;
+        }
         for (int i = 0; i < arr.length; i++) {
+            if (arr[i].length != arr2[i].length) {
+                return false;
+            }
             for (int j = 0; j < arr[i].length; j++) {
                 if (arr[i][j] != arr2[i][j]) {
                     return false;
@@ -77,8 +83,9 @@ public class MultiArrays {
         return true;
     }
     public static char[][] copy2DCharArray(char[][] arr) {
-        char[][] arr2 = new char[arr.length][ arr[0].length];
+        char[][] arr2 = new char[arr.length][];
         for (int i = 0; i < arr.length; i++) {
+            arr2[i] = new char[arr[i].length];
             for (int j = 0; j < arr[i].length; j++) {
                 arr2[i][j] = arr[i][j];
             }

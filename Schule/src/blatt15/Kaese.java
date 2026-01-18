@@ -23,16 +23,16 @@ public class Kaese {
                 if (arr[i][j] == '2') {
                     if (Simulationen.zaehlenVier(käse, i, j, false, ' ') > 0) {
                         if (Simulationen.getNorden(arr, i, j, false) == ' ') {
-                            käse[i][j--] = '2';
+                            käse[i][j-1] = '2';
                         }
                         if (Simulationen.getOsten(arr, i, j, false) == ' ') {
-                            käse[i++][j] = '2';
+                            käse[i+1][j] = '2';
                         }
                         if (Simulationen.getSueden(arr, i, j, false) == ' ') {
-                            käse[i][j++] = '2';
+                            käse[i][j+1] = '2';
                         }
                         if (Simulationen.getWesten(arr, i, j, false) == ' ') {
-                            käse[i--][j] = '2';
+                            käse[i-1][j] = '2';
                         }
                     }
                 }

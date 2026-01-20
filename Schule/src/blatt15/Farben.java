@@ -199,7 +199,7 @@ public class Farben {
             }
         }
 
-        if (eigeneFelder > 0) {
+        if (eigeneFelder > 4) {
             while (!positionGefunden) {
                 neux = Zufall.zufallGanz(1, arr.length - 1);
                 neuy = Zufall.zufallGanz(1, arr[0].length - 1);

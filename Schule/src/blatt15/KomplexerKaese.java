@@ -11,9 +11,8 @@ public class KomplexerKaese {
         return false;
     }
     public static char[][] komplexwasser(char[][]kaese1, char[][]kaese2) {
-        char[][] käse = blatt14.MultiArrays.copy2DCharArray(kaese1);
-        for (int i = 0; i < käse.length; i++) {
-            for (int j = 0; j < käse[i].length; j++) {
+        for (int i = 0; i < kaese2.length; i++) {
+            for (int j = 0; j < kaese2[i].length; j++) {
                 if (kaese1[i][j] == '2') {
                     if (behind(kaese2, i, j)) {
                         kaese2[i][j] = '2';

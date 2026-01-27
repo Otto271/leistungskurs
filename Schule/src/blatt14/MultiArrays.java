@@ -4,9 +4,10 @@ public class MultiArrays {
     public static void print2DArray(char[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print("[ ");
-            for (int j = 0; j < arr[i].length; j++) {
+            for (int j = 0; j < arr[i].length - 1; j++) {
                 System.out.print(arr[i][j] + " | ");
             }
+            System.out.print(arr[i][arr[i].length - 1]);
             System.out.println(" ]");
         }
     }

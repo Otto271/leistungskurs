@@ -2,149 +2,129 @@ package blatt15;
 import schisch_visualizer.*;
 import blatt13.Zufall;
 public class Farben {
-    public static String reihenfolge() {
-        String reihe = "";
-        int[] spieler = {1, 2, 3, 4, 5, 6, 7, 8};
+    static int[] posx = new  int[8];
+    static int[] posy = new  int[8];
+    static int[] reihenfolgeV = new int[8];
+    static char[][] spielfeld = new char[80][80];
 
+    final static char FARBE1 = '7';
+    final static char FARBE2 = '9';
+
+    public static void reihenfolge() {
+
+        reihenfolgeV = new int[]{0,1,2,3,4,5,6,7};
         // Fisher-Yates Shuffle Algorithmus
-        for (int i = spieler.length - 1; i > 0; i--) {
+        for (int i = reihenfolgeV.length - 1; i > 0; i--) {
             int j = Zufall.zufallGanz(0, i + 1);
             // Tausche spieler[i] mit spieler[j]
-            int temp = spieler[i];
-            spieler[i] = spieler[j];
-            spieler[j] = temp;
+            int temp = reihenfolgeV[i];
+            reihenfolgeV[i] = reihenfolgeV[j];
+            reihenfolgeV[j] = temp;
         }
-
-        // Konvertiere Array zu String
-        for (int i = 0; i < spieler.length; i++) {
-            reihe += spieler[i];
-        }
-
-        return reihe;
     }
-    public static void zugEins(char[][] arr, int[] posx, int[] posy, int spielernummer) {
-        char teamfarbe = (spielernummer <= 3) ? '7' : '9';
-        int x = posx[spielernummer];
-        int y = posy[spielernummer];
+    public static void zugEins(int spielernummer) {
+        if (spielernummer < 4) {
+            int x = posx[spielernummer];
+            int y = posy[spielernummer];
 
-        // Wähle zufällige Richtung (0=Nord, 1=Süd, 2=West, 3=Ost)
-        int richtung = Zufall.zufallGanz(0, 4);
-        int neuX = x;
-        int neuY = y;
+            // Wähle zufällige Richtung (0=Nord, 1=Süd, 2=West, 3=Ost)
+            int richtung = Zufall.zufallGanz(0, 4);
+            int neuX = x;
+            int neuY = y;
 
-        if (richtung == 0 && x > 0) {
-            neuX = x - 1;  // Nord
-        } else if (richtung == 1 && x < arr.length - 1) {
-            neuX = x + 1;  // Süd
-        } else if (richtung == 2 && y > 0) {
-            neuY = y - 1;  // West
-        } else if (richtung == 3 && y < arr[0].length - 1) {
-            neuY = y + 1;  // Ost
-        } else {
-            return;  // Ungültige Bewegung (Rand erreicht)
-        }
-
-        // Prüfe ob neue Position gültig ist (keine Wand)
-        if (arr[neuX][neuY] == '8') {
-            return;  // Zug gestrichen
-        }
-
-        // Prüfe ob Spieler getroffen wurde
-        if (arr[neuX][neuY] == 'P') {
-            for (int i = 0; i < 8; i++) {
-                if (posx[i] == neuX && posy[i] == neuY && i != spielernummer) {
-                    respawn(arr, posx, posy, i);
-                    break;
-                }
-            }
-        }
-
-        // Führe Bewegung aus
-        arr[x][y] = teamfarbe;
-        arr[neuX][neuY] = 'P';
-        posx[spielernummer] = neuX;
-        posy[spielernummer] = neuY;
-    }
-    public static void zugZwei(char[][] arr, int[] posx, int[] posy, int spielernummer) {
-        char teamfarbe = (spielernummer <= 3) ? '7' : '9';
-        int x = posx[spielernummer];
-        int y = posy[spielernummer];
-
-        // Wähle zufällige Richtung
-        int richtung = Zufall.zufallGanz(0, 4);
-        int neuX = x;
-        int neuY = y;
-        int zwischenX = x;
-        int zwischenY = y;
-
-        if (richtung == 0 && x > 1) {  // Nord (2 Felder)
-            neuX = x - 2;
-            zwischenX = x - 1;
-        } else if (richtung == 1 && x < arr.length - 2) {  // Süd
-            neuX = x + 2;
-            zwischenX = x + 1;
-        } else if (richtung == 2 && y > 1) {  // West
-            neuY = y - 2;
-            zwischenY = y - 1;
-        } else if (richtung == 3 && y < arr[0].length - 2) {  // Ost
-            neuY = y + 2;
-            zwischenY = y + 1;
-        } else {
-            return;  // Ungültige Bewegung
-        }
-
-        // Prüfe ob Zielposition gültig ist
-        if (arr[neuX][neuY] == '8') {
-            return;  // Zug gestrichen
-        }
-
-        // Prüfe Zwischenfeld auf Spieler
-        if (arr[zwischenX][zwischenY] == 'P') {
-            for (int i = 0; i < 8; i++) {
-                if (posx[i] == zwischenX && posy[i] == zwischenY && i != spielernummer) {
-                    respawn(arr, posx, posy, i);
-                    break;
-                }
-            }
-        }
-
-        // Prüfe Zielfeld auf Spieler
-        if (arr[neuX][neuY] == 'P') {
-            for (int i = 0; i < 8; i++) {
-                if (posx[i] == neuX && posy[i] == neuY && i != spielernummer) {
-                    respawn(arr, posx, posy, i);
-                    break;
-                }
-            }
-        }
-
-        // Führe Bewegung aus
-        arr[x][y] = teamfarbe;
-        arr[zwischenX][zwischenY] = teamfarbe;
-        arr[neuX][neuY] = 'P';
-        posx[spielernummer] = neuX;
-        posy[spielernummer] = neuY;
-    }
-    public static void schritt(char[][] arr, int[] posx, int[] posy) {
-        String reihe = reihenfolge();
-
-        for (int i = 0; i < reihe.length(); i++) {
-            // Konvertiere Char zu Spielernummer (1-8 -> 0-7)
-            int spielernum = Character.getNumericValue(reihe.charAt(i)) - 1;
-
-            // Wähle zufällig zwischen zugEins und zugZwei
-            int zugTyp = Zufall.zufallGanz(0, 2);
-            if (zugTyp == 0) {
-                zugEins(arr, posx, posy, spielernum);
+            if (richtung == 0 && x > 0) {
+                neuX = x - 1;  // Nord
+            } else if (richtung == 1 && x < spielfeld.length - 1) {
+                neuX = x + 1;  // Süd
+            } else if (richtung == 2 && y > 0) {
+                neuY = y - 1;  // West
+            } else if (richtung == 3 && y < spielfeld[0].length - 1) {
+                neuY = y + 1;  // Ost
             } else {
-                zugZwei(arr, posx, posy, spielernum);
+                return;  // Ungültige Bewegung (Rand erreicht)
             }
+
+            // Prüfe ob neue Position gültig ist (keine Wand)
+            if (spielfeld[neuX][neuY] == '8') {
+                return;  // Zug gestrichen
+            }
+
+            // Prüfe ob Spieler getroffen wurde
+            if (spielfeld[neuX][neuY] == 'P') {
+                for (int i = 0; i < 8; i++) {
+                    if (posx[i] == neuX && posy[i] == neuY && i != spielernummer) {
+                        respawn(i);
+                        break;
+                    }
+                }
+            }
+
+            // Führe Bewegung aus
+            spielfeld[x][y] = FARBE1;
+            spielfeld[neuX][neuY] = 'P';
+            posx[spielernummer] = neuX;
+            posy[spielernummer] = neuY;
         }
     }
-    public static void auswertung(char[][] arr, int[] posx, int[] posy) {
-        int team7 = zaehlen(7, arr, posx, posy);
-        int team9 = zaehlen(9, arr, posx, posy);
-        int leer = zaehlen(0, arr, posx, posy);
+    public static void zugZwei(int spielernummer) {
+        if (spielernummer >= 4) {
+            int x = posx[spielernummer];
+            int y = posy[spielernummer];
+
+            // Wähle zufällige Richtung (0=Nord, 1=Süd, 2=West, 3=Ost)
+            int richtung = Zufall.zufallGanz(0, 4);
+            int neuX = x;
+            int neuY = y;
+
+            if (richtung == 0 && x > 0) {
+                neuX = x - 1;  // Nord
+            } else if (richtung == 1 && x < spielfeld.length - 1) {
+                neuX = x + 1;  // Süd
+            } else if (richtung == 2 && y > 0) {
+                neuY = y - 1;  // West
+            } else if (richtung == 3 && y < spielfeld[0].length - 1) {
+                neuY = y + 1;  // Ost
+            } else {
+                return;  // Ungültige Bewegung (Rand erreicht)
+            }
+
+            // Prüfe ob neue Position gültig ist (keine Wand)
+            if (spielfeld[neuX][neuY] == '8') {
+                return;  // Zug gestrichen
+            }
+
+            // Prüfe ob Spieler getroffen wurde
+            if (spielfeld[neuX][neuY] == 'P') {
+                for (int i = 0; i < 8; i++) {
+                    if (posx[i] == neuX && posy[i] == neuY && i != spielernummer) {
+                        respawn(i);
+                        break;
+                    }
+                }
+            }
+
+            // Führe Bewegung aus
+            spielfeld[x][y] = FARBE2;
+            spielfeld[neuX][neuY] = 'P';
+            posx[spielernummer] = neuX;
+            posy[spielernummer] = neuY;
+        }
+    }
+    public static void schritt() {
+        reihenfolge();
+        for (int i = 0; i < reihenfolgeV.length; i++) {
+            if (reihenfolgeV[i] < 4) {
+                zugEins(reihenfolgeV[i]);
+            } else {
+                zugZwei(reihenfolgeV[i]);
+            }
+
+        }
+    }
+    public static void auswertung() {
+        int team7 = zaehlen(7);
+        int team9 = zaehlen(9);
+        int leer = zaehlen(0);
         int gesamt = team7 + team9;
 
         System.out.println("=== AUSWERTUNG ===");
@@ -167,18 +147,20 @@ public class Farben {
             System.out.println("Unentschieden!");
         }
     }
-    public static void simulation(char[][] arr, int[] posx, int[] posy, int anzahlZuege) {
+    public static void simulation(int anzahlZuege) {
         SchischVisualizer sv = new SchischVisualizer();
-
+        initialisiereSpielfeld();
+        startPosition();
+        sv.step(spielfeld);
         for (int i = 0; i < anzahlZuege; i++) {
-            schritt(arr, posx, posy);
-            sv.step(arr);
+            schritt();
+            sv.step(spielfeld);
         }
 
         sv.start();
-        auswertung(arr, posx, posy);
+        auswertung();
     }
-    public static void respawn(char[][] arr, int[] posx, int[] posy, int spielernummer) {
+    public static void respawn(int spielernummer) {
         char teamfarbe;
         int teamnummer;
         if (spielernummer >= 0 && spielernummer <= 3) {
@@ -193,71 +175,71 @@ public class Farben {
         
         // Suche nach einem Feld der eigenen Farbe
         int eigeneFelder = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] == teamfarbe) eigeneFelder++;
+        for (int i = 0; i < spielfeld.length; i++) {
+            for (int j = 0; j < spielfeld[i].length; j++) {
+                if (spielfeld[i][j] == teamfarbe) eigeneFelder++;
             }
         }
 
         if (eigeneFelder > 4) {
             while (!positionGefunden) {
-                neux = Zufall.zufallGanz(1, arr.length - 1);
-                neuy = Zufall.zufallGanz(1, arr[0].length - 1);
-                if (arr[neux][neuy] == teamfarbe) {
+                neux = Zufall.zufallGanz(1, spielfeld.length - 1);
+                neuy = Zufall.zufallGanz(1, spielfeld[0].length - 1);
+                if (spielfeld[neux][neuy] == teamfarbe) {
                     positionGefunden = true;
                 }
             }
         } else {
             // Wenn kein eigenes Feld vorhanden, suche ein leeres Feld
             while (!positionGefunden) {
-                neux = Zufall.zufallGanz(1, arr.length - 1);
-                neuy = Zufall.zufallGanz(1, arr[0].length - 1);
-                if (arr[neux][neuy] == ' ') {
+                neux = Zufall.zufallGanz(1, spielfeld.length - 1);
+                neuy = Zufall.zufallGanz(1, spielfeld[0].length - 1);
+                if (spielfeld[neux][neuy] == ' ') {
                     positionGefunden = true;
                 }
             }
         }
         
         // Setze alte Position auf Teamfarbe (als Bestrafung/Hinterlassenschaft)
-        arr[posx[spielernummer]][posy[spielernummer]] = teamfarbe;
+        spielfeld[posx[spielernummer]][posy[spielernummer]] = teamfarbe;
         
         // Setze neue Position
-        arr[neux][neuy] = 'P';
+        spielfeld[neux][neuy] = 'P';
         posx[spielernummer] = neux;
         posy[spielernummer] = neuy;
     }
-    public static int zaehlen(int teamnummer, char[][] arr, int[] posx, int[] posy){
+    public static int zaehlen(int teamnummer){
         int count = 0;
         if (teamnummer == 7) {
-            for  (int i = 0; i < arr.length; i++) {
-                for (int j = 0; j < arr[i].length; j++) {
-                    if (arr[i][j] == '7') {
+            for  (int i = 0; i < spielfeld.length; i++) {
+                for (int j = 0; j < spielfeld[i].length; j++) {
+                    if (spielfeld[i][j] == '7') {
                         count++;
                     }
                 }
             }
             for (int i = 0; i <= 3; i++) {
-                if (arr[posx[i]][posy[i]] == 'P') {
+                if (spielfeld[posx[i]][posy[i]] == 'P') {
                     count++;
                 }
             }
         } else if (teamnummer == 9) {
-            for (int i = 0; i < arr.length; i++) {
-                for (int j = 0; j < arr[i].length; j++) {
-                    if (arr[i][j] == '9') {
+            for (int i = 0; i < spielfeld.length; i++) {
+                for (int j = 0; j < spielfeld[i].length; j++) {
+                    if (spielfeld[i][j] == '9') {
                         count++;
                     }
                 }
             }
             for (int i = 4; i <= 7; i++) {
-                if (arr[posx[i]][posy[i]] == 'P') {
+                if (spielfeld[posx[i]][posy[i]] == 'P') {
                     count++;
                 }
             }
         } else if (teamnummer == 0) {
-            for (int i = 0; i < arr.length; i++) {
-                for (int j = 0; j < arr[i].length; j++) {
-                    if (arr[i][j] == ' ') {
+            for (int i = 0; i < spielfeld.length; i++) {
+                for (int j = 0; j < spielfeld[i].length; j++) {
+                    if (spielfeld[i][j] == ' ') {
                         count++;
                     }
                 }
@@ -265,67 +247,37 @@ public class Farben {
         }
         return count;
     }
-    public static void initialisiereSpielfeld(char[][] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if(i == 0 || i == arr.length-1) {
-                    arr[i][j] = '8';
-                } else if (j == 0 || j == arr[i].length-1) {
-                    arr[i][j] = '8';
+    public static void initialisiereSpielfeld() {
+        for (int i = 0; i < spielfeld.length; i++) {
+            for (int j = 0; j < spielfeld[i].length; j++) {
+                if(i == 0 || i == spielfeld.length-1) {
+                    spielfeld[i][j] = '8';
+                } else if (j == 0 || j == spielfeld[i].length-1) {
+                    spielfeld[i][j] = '8';
                 } else {
-                    arr[i][j] = ' ';
+                    spielfeld[i][j] = ' ';
                 }
             }
         }
     }
-    public static void startPosition(char[][] arr, int[] posx, int[] posy) {
+    public static void startPosition() {
         for (int i = 0; i < 4; i++) {
-            int zufallx = Zufall.zufallGanz(1, arr.length/2 + 1);
-            int zufally = Zufall.zufallGanz(1, arr[0].length - 1);
-            arr[zufallx][zufally] = 'P';
+            int zufallx = Zufall.zufallGanz(1, spielfeld.length/2 + 1);
+            int zufally = Zufall.zufallGanz(1, spielfeld[0].length - 1);
+            spielfeld[zufallx][zufally] = 'P';
             posx[i] = zufallx;
             posy[i] = zufally;
         }
         for (int i = 4; i < 8; i++) {
-            int zufallx = Zufall.zufallGanz(arr.length/2 + 1, arr.length - 1);
-            int zufally = Zufall.zufallGanz(1, arr[0].length - 1);
-            arr[zufallx][zufally] = 'P';
+            int zufallx = Zufall.zufallGanz(spielfeld.length/2 + 1, spielfeld.length - 1);
+            int zufally = Zufall.zufallGanz(1, spielfeld[0].length - 1);
+            spielfeld[zufallx][zufally] = 'P';
             posx[i] = zufallx;
             posy[i] = zufally;
         }
     }
-    public static int[] positionx(char[][] arr, int[] posx) {
-        int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] == 'P') {
-                    posx[count] = i;
-                    count++;
-                }
-            }
-        }
-        return posx;
-    }
-    public static int[] positiony(char[][] arr, int[] posy) {
-        int count = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                if (arr[i][j] == 'P') {
-                    posy[count] = j;
-                    count++;
-                }
-            }
-        }
-        return posy;
-    }
     public static void main(String[] args) {
-        SchischVisualizer sv = new SchischVisualizer();
-        char[][] arr = new char[80][80];
-        int[] posx = new int[8];
-        int[] posy = new int[8];
-        initialisiereSpielfeld(arr);
-        startPosition(arr, posx, posy);
 
-        simulation(arr, posx, posy, 1000);
+        simulation(1000);
     }
 }

@@ -4,6 +4,7 @@ import schisch_visualizer.*;
 import blatt13.Zufall;
 
 public class Spiegel {
+    static char[][] spielfeld = new char[40][40];
     public static void print2DArraySpiegel(char[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print("[ ");
@@ -15,7 +16,7 @@ public class Spiegel {
         }
     }
     public static void zufallSpiegel(char[][] arr) {
-        Farben.initialisiereSpielfeld(arr);
+        Farben.initialisiereSpielfeld();
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 int zufall = Zufall.zufallGanz(1,4);

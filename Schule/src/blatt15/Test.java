@@ -3,7 +3,7 @@ import blatt14.MultiArrays;
 import blatt14.Simulationen;
 import schisch_visualizer.*;
 import blatt13.Zufall;
-public class Farben {
+public class Test {
     static int[] posx = new  int[8];
     static int[] posy = new  int[8];
     static int[] reihenfolgeV = new int[8];
@@ -188,7 +188,7 @@ public class Farben {
         }
         boolean positionGefunden = false;
         int neux = posx[spielernummer], neuy = posy[spielernummer];
-        
+
         // Suche nach einem Feld der eigenen Farbe
         int eigeneFelder = 0;
         for (int i = 0; i < spielfeld.length; i++) {
@@ -215,10 +215,10 @@ public class Farben {
                 }
             }
         }
-        
+
         // Setze alte Position auf Teamfarbe (als Bestrafung/Hinterlassenschaft)
         spielfeld[posx[spielernummer]][posy[spielernummer]] = teamfarbe;
-        
+
         // Setze neue Position
         spielfeld[neux][neuy] = 'P';
         posx[spielernummer] = neux;

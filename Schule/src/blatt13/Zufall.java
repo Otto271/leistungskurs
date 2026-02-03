@@ -24,6 +24,6 @@ public class Zufall {
         return zufall;
     }
     public static void main(String[] args) {
-        blatt07.ArbeitMitArrays.printArray(zufallArray(5,10,10));
+        System.out.println(zufallGanz(1,3));
     }
 }

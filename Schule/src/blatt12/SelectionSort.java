@@ -1,5 +1,7 @@
 package blatt12;
 
+import blatt07.ArbeitMitArrays;
+
 public class SelectionSort {
     public static void SelectionSort(int[] arr){
         int[] temp = new int[arr.length];
@@ -24,5 +26,6 @@ public class SelectionSort {
     public static void main(String[] args) {
         int[] arr = new int[] {64, 25, 12, 22, 11};
         SelectionSort(arr);
+        ArbeitMitArrays.printArray(arr);
     }
 }

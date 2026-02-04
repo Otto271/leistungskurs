@@ -33,25 +33,25 @@ public class Test {
             int neuX = x;
             int neuY = y;
 
-            if (Simulationen.getOsten(spielfeld, x, y, false) == '9') {
-                neuX++;
-            } else if (Simulationen.getNorden(spielfeld, x, y, false) == '9') {
-                neuY--;
-            } else if (Simulationen.getSueden(spielfeld, x, y, false) == '9') {
-                neuY++;
-            } else if (Simulationen.getWesten(spielfeld, x, y, false) == '9') {
-                neuX--;
-            } else if (Simulationen.getOsten(spielfeld, x, y, false) != '8') {
-                neuX++;
-            } else if (random == 0) {
-                neuY++;
-            } else if (random == 1) {
-                neuX--;
-            } else if (random == 2) {
-                neuY--;
-            } else {
-                return;
-            }
+                if (Simulationen.getWesten(spielfeld, x, y, false) == '9') {
+                    neuX--;
+                } else if (Simulationen.getNorden(spielfeld, x, y, false) == '9') {
+                    neuY--;
+                } else if (Simulationen.getSueden(spielfeld, x, y, false) == '9') {
+                    neuY++;
+                } else if (Simulationen.getOsten(spielfeld, x, y, false) == '9') {
+                    neuX++;
+                } else if (Simulationen.getOsten(spielfeld, x, y, false) == ' ') {
+                    neuX++;
+                } else if (random == 0) {
+                    neuY++;
+                } else if (random == 1) {
+                    neuX--;
+                } else if (random == 2) {
+                    neuY--;
+                } else {
+                    return;
+                }
 
             // Prüfe ob neue Position gültig ist (keine Wand)
             if (spielfeld[neuX][neuY] == '8') {
@@ -80,25 +80,16 @@ public class Test {
             int x = posx[spielernummer];
             int y = posy[spielernummer];
 
-            int random = Zufall.zufallGanz(0, 3);
+            int random = Zufall.zufallGanz(0, 4);
             int neuX = x;
             int neuY = y;
-
-            if (Simulationen.getWesten(spielfeld, x, y, false) == '7') {
-                neuX--;
-            } else if (Simulationen.getNorden(spielfeld, x, y, false) == '7') {
-                neuY--;
-            } else if (Simulationen.getSueden(spielfeld, x, y, false) == '7') {
-                neuY++;
-            } else if (Simulationen.getOsten(spielfeld, x, y, false) == '7') {
+            if (random == 0) {
                 neuX++;
-            } else if (Simulationen.getWesten(spielfeld, x, y, false) != '8') {
-                neuX--;
-            } else if (random == 0) {
-                neuY++;
             } else if (random == 1) {
-                neuX--;
+                neuY++;
             } else if (random == 2) {
+                neuX--;
+            } else if (random == 3) {
                 neuY--;
             } else {
                 return;
@@ -294,6 +285,6 @@ public class Test {
     }
     public static void main(String[] args) {
 
-        simulation(1000);
+        simulation(5000);
     }
 }

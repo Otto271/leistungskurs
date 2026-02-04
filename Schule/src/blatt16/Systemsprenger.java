@@ -21,7 +21,7 @@ public class Systemsprenger {
         for (int i = j; i < anzahl+j; i++) {
             File file = new File("sprengtest\\boom" + i + ".txt");
             FileWriter fw = new FileWriter(file);
-            int[] arr = Zufall.zufallArray(65,122,20);
+            int[] arr = Zufall.zufallArray(65,122,200);
             for(int k = 0; k < arr.length; k++){
                 char a = (char)arr[k];
                 fw.write(a);

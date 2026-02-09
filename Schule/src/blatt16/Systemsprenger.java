@@ -5,6 +5,7 @@ import blatt13.Zufall;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Systemsprenger {
     public static void sprengen(int anzahl) throws IOException {
@@ -29,7 +30,24 @@ public class Systemsprenger {
             fw.close();
         }
     }
+    public static void reinigen() {
+        File reinigen = new File("sprengtest");
+
+        if (reinigen.exists()) {
+            if (reinigen.isDirectory()) {
+                for (int i = 0; i < Objects.requireNonNull(reinigen.listFiles()).length; i++) {
+                    File file = new File("sprengtest\\" + Objects.requireNonNull(reinigen.listFiles())[i].getName() + ".txt");
+                    if (file.isFile()) {
+                        if (file.getName().equals("boom" + i + ".txt")) {
+                            System.out.println(file.delete());
+
+                        }
+                    }
+                }
+            }
+        }
+    }
     public static void main(String[] args) throws IOException {
-        sprengen(4);
+        reinigen();
     }
 }

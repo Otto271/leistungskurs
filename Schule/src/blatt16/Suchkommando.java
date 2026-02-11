@@ -12,13 +12,19 @@ public class Suchkommando {
             File file = new File(path);
             String[] list = file.list();
             if (list != null) {
+                int count = 0;
                 for (int i = 0; i < list.length; i++) {
+                    File file1 = new File(path + list[i]);
                     if (Objects.equals(list[i], name)) {
                         System.out.println(file.getAbsolutePath() + name);
                         return;
+                    } else if (file1.isDirectory()) {
+                        list[count] = file1.getName();
+                        count++;
                     }
                 }
             }
+            path = path + "";
         }
     }
 

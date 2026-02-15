@@ -3,29 +3,31 @@ package blatt12;
 import blatt07.ArbeitMitArrays;
 
 public class SelectionSort {
-    public static void SelectionSort(int[] arr){
-        int[] temp = new int[arr.length];
-        int i = 1;
-        int j = 0;
-        int n = 0;
-        while (i < arr.length) {
-            int k = i;
-            while (k < arr.length) {
-                if (arr[k] < arr[k - 1]) {
-                    j = arr[k];
-                    n = k;
+    public static void SelectionSort(int[] arr, boolean max){
+        for (int i = 0; i < arr.length - 1; i++) {
+            int selectedIndex = i;
+
+            for (int j = i + 1; j < arr.length; j++) {
+
+                if (max) {
+                    if (arr[j] > arr[selectedIndex]) {
+                        selectedIndex = j;
+                    }
+                } else {
+                    if (arr[j] < arr[selectedIndex]) {
+                        selectedIndex = j;
+                    }
                 }
-                k++;
             }
-            arr[n] = 999999999;
-            temp[i--] = j;
-            System.out.println(arr[i--]);
-            i++;
+
+            int temp = arr[i];
+            arr[i] = arr[selectedIndex];
+            arr[selectedIndex] = temp;
         }
     }
     public static void main(String[] args) {
         int[] arr = new int[] {64, 25, 12, 22, 11};
-        SelectionSort(arr);
+        SelectionSort(arr, false);
         ArbeitMitArrays.printArray(arr);
     }
 }

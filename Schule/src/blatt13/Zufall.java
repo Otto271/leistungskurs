@@ -23,6 +23,9 @@ public class Zufall {
         }
         return zufall;
     }
+    public static double zufall(double a, double b) {
+        return Math.random() * (b - a) + a;
+    }
     public static void main(String[] args) {
         System.out.println(zufallGanz(1,3));
     }

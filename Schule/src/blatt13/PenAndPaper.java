@@ -102,12 +102,15 @@ public class PenAndPaper {
                     System.out.println("Bard");
                     break;
                 }
+                int temp = lebenB;
                 lebenB -= angriff(1, 8, false, nachteilA, bonusA, rüstungB, 12);
                 if (lebenB <= 0) {
                     System.out.println("Barbar");
                     break;
                 }
-                lebenB -= wuerfel(1, 10);
+                if (lebenB < temp) {
+                    lebenB -= wuerfel(1, 10);
+                }
                 länge--;
                 if (länge == 0) {
                     vorteilB = false;

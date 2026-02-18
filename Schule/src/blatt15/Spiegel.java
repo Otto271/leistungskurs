@@ -72,7 +72,6 @@ public class Spiegel {
         for (int i = 0; i < schritte; i++) {
             if (temp == pfeilabstand) {
                 generierePfeil(1);
-                temp = 0;
             }
             for (int k = 0; k < posy.length; k++) {
                 double randm = Math.random();

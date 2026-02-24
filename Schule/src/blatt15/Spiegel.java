@@ -103,8 +103,9 @@ public class Spiegel {
                                         }
                                         posy[k] = posy[k] - 1;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') {
+                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') { //TODO Respawn einbinden
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] - 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k] + 1][posy[k]] = '\\';
                                         }
@@ -146,6 +147,7 @@ public class Spiegel {
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] + 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] + 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k] + 1][posy[k]] = '\\';
                                         }
@@ -249,6 +251,7 @@ public class Spiegel {
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] + 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k] + 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k] + 1][posy[k]] = '\\';
                                         }
@@ -289,6 +292,7 @@ public class Spiegel {
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] - 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k] + 1][posy[k]] = '\\';
                                         }
@@ -391,6 +395,7 @@ public class Spiegel {
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] - 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k]][posy[k] - 1] = '\\';
                                         }
@@ -432,6 +437,7 @@ public class Spiegel {
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] - 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k] - 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
                                             spielfeld[posx[k]][posy[k] - 1] = '/';
                                         }
@@ -515,53 +521,87 @@ public class Spiegel {
                                 case '/':
                                     if (spielfeld[posx[k] - 1][posy[k] + 1] == '/') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 2][posy[k] - 1] = '>';
+                                        spielfeld[posx[k] - 1][posy[k] + 2] = 'V';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
-                                            spielfeld[posx[k] + 1][posy[k] - 1] = '\\';
+                                            spielfeld[posx[k]][posy[k] + 1] = '\\';
+                                            spielfeld[posx[k] - 1][posy[k] + 1] = '\\';
                                         }
                                         posy[k] = posy[k] - 1;
                                         posx[k] = posx[k] + 2;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '\\') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] + 1] == '\\') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k]][posy[k] - 1] = '<';
+                                        spielfeld[posx[k] - 1][posy[k]] = '^';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
-                                            spielfeld[posx[k] + 1][posy[k] - 1] = '/';
+                                            spielfeld[posx[k]][posy[k] + 1] = '\\';
+                                            spielfeld[posx[k] - 1][posy[k] + 1] = '/';
                                         }
-                                        posy[k] = posy[k] - 1;
+                                        posx[k] = posx[k] - 1;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] + 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k] + 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
+                                            spielfeld[posx[k]][posy[k] + 1] = '\\';
                                         }
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '8') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] + 1] == '8') {
                                         break;
                                     } else {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] - 1] = '^';
+                                        spielfeld[posx[k] - 1][posy[k] + 1] = '<';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
+                                            spielfeld[posx[k]][posy[k] + 1] = '\\';
                                         }
-                                        posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] + 1;
+                                        posx[k] = posx[k] - 1;
+                                        posy[k] = posy[k] + 1;
                                         break;
                                     }
                                 case '\\':
-                                    spielfeld[posx[k]][posy[k]] = ' ';
-                                    spielfeld[posx[k] + 1][posy[k] + 1] = '>';
-                                    if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k] + 1] = '/';
+                                    if (spielfeld[posx[k] + 1][posy[k] + 1] == '/') {
+                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k]] = '^';
+                                        if (randm < drehwahrscheinlichkeit) {
+                                            spielfeld[posx[k]][posy[k] + 1] = '/';
+                                            spielfeld[posx[k] + 1][posy[k] + 1] = '\\';
+                                        }
+                                        posx[k] = posx[k] + 1;
+                                        break;
+                                    } else if (spielfeld[posx[k] + 1][posy[k] + 1] == '\\') {
+                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] + 2] = '<';
+                                        if (randm < drehwahrscheinlichkeit) {
+                                            spielfeld[posx[k]][posy[k] + 1] = '/';
+                                            spielfeld[posx[k] + 1][posy[k] + 1] = '/';
+                                        }
+                                        posy[k] = posy[k] + 2;
+                                        posx[k] = posx[k] + 1;
+                                        break;
+                                    } else if (spielfeld[posx[k] + 1][posy[k] + 1] == 'O') {
+                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] + 1] = ' ';
+                                        if (randm < drehwahrscheinlichkeit) {
+                                            spielfeld[posx[k]][posy[k] + 1] = '\\';
+                                        }
+                                        posx[k] = 0;
+                                        posy[k] = 0;
+                                        count++;
+                                        break;
+                                    } else if (spielfeld[posx[k] + 1][posy[k] + 1] == '8') {
+                                        break;
+                                    } else {
+                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k] + 1] = '>';
+                                        if (randm < drehwahrscheinlichkeit) {
+                                            spielfeld[posx[k]][posy[k] + 1] = '/';
+                                        }
+                                        posy[k] = posy[k] + 1;
+                                        posx[k] = posx[k] + 1;
+                                        break;
                                     }
-                                    posy[k] = posy[k] + 1;
-                                    posx[k] = posx[k] + 1;
-                                    break;
                                 case ' ':
                                     spielfeld[posx[k]][posy[k]] = ' ';
                                     spielfeld[posx[k]][posy[k] + 1] = 'V';

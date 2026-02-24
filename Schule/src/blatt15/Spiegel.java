@@ -4,8 +4,8 @@ import blatt13.Zufall;
 
 public class Spiegel {
     static char[][] spielfeld = new char[40][40];
-    static int[] posy = new int[5];
-    static int[] posx = new int[5];
+    static int[] posy = new int[20];
+    static int[] posx = new int[20];
     public static void zufallSpiegel() {
         for (int i = 0; i < spielfeld.length; i++) {
             for (int j = 0; j < spielfeld[i].length; j++) {
@@ -46,20 +46,23 @@ public class Spiegel {
     }
     public static void generierePfeil(int y) {
         if (spielfeld[1][y/2] != '8') {
-            spielfeld[1][y/2] = '>';
             for (int i = 0; i < posy.length; i++) {
-                if (posy[i] == 0) {
+                if (posy[i] == 0 && spielfeld[1][y/2] != '8' && spielfeld[1][y/2] != '/' && spielfeld[1][y/2] != '\\') {
+                    spielfeld[1][y/2] = '>';
                     posy[i] = y/2;
                     posx[i] = 1;
                 }
             }
         } else {
-            int zufall = Zufall.zufallGanz(1, spielfeld.length-2);
-            spielfeld[1][zufall] = '>';
-            for (int i = 0; i < posy.length; i++) {
-                if (posy[i] == 0) {
-                    posy[i] = zufall;
-                    posx[i] = 1;
+            while (true) {
+                int zufall = Zufall.zufallGanz(1, spielfeld.length - 2);
+                for (int i = 0; i < posy.length; i++) {
+                    if (posy[i] == 0 && spielfeld[1][zufall] != '8' && spielfeld[1][zufall] != '/' && spielfeld[1][zufall] != '\\') {
+                        spielfeld[1][zufall] = '>';
+                        posy[i] = zufall;
+                        posx[i] = 1;
+                        return;
+                    }
                 }
             }
         }
@@ -72,6 +75,7 @@ public class Spiegel {
         for (int i = 0; i < schritte; i++) {
             if (temp == pfeilabstand) {
                 generierePfeil(1);
+                temp = 0;
             }
             for (int k = 0; k < posy.length; k++) {
                 double randm = Math.random();
@@ -80,24 +84,22 @@ public class Spiegel {
                         case '>':
                             switch (spielfeld[posx[k] + 1][posy[k]]) {
                                 case '/':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k] - 1] = '^';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] - 1] = '^';
-                                        posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] + 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k]] = '\\';
                                     }
+                                    posy[k] = posy[k] - 1;
+                                    posx[k] = posx[k] + 1;
                                     break;
                                 case '\\':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k] + 1] = 'V';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] + 1] = 'V';
-                                        posy[k] = posy[k] + 1;
-                                        posx[k] = posx[k] + 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] + 1][posy[k]] = '/';
                                     }
+                                    posy[k] = posy[k] + 1;
+                                    posx[k] = posx[k] + 1;
                                     break;
                                 case ' ':
                                     spielfeld[posx[k]][posy[k]] = ' ';
@@ -107,31 +109,76 @@ public class Spiegel {
                                 case 'O':
                                     spielfeld[posx[k]][posy[k]] = ' ';
                                     spielfeld[posx[k] + 1][posy[k]] = ' ';
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                                     count++;
+                                    generierePfeil(1);
                                     break;
+                                case '<':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] + 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '>':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] + 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '^':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] + 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case 'V':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] + 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                             }
                             break;
                         case '<':
                             switch (spielfeld[posx[k] - 1][posy[k]]) {
                                 case '/':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k] + 1] = 'V';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] - 1][posy[k] + 1] = 'V';
-                                        posy[k] = posy[k] + 1;
-                                        posx[k] = posx[k] - 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k]] = '\\';
                                     }
+                                    posy[k] = posy[k] + 1;
+                                    posx[k] = posx[k] - 1;
                                     break;
                                 case '\\':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k] - 1] = '^';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] - 1][posy[k] - 1] = '^';
-                                        posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] - 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k]] = '/';
                                     }
+                                    posy[k] = posy[k] - 1;
+                                    posx[k] = posx[k] - 1;
                                     break;
                                 case ' ':
                                     spielfeld[posx[k]][posy[k]] = ' ';
@@ -141,31 +188,76 @@ public class Spiegel {
                                 case 'O':
                                     spielfeld[posx[k]][posy[k]] = ' ';
                                     spielfeld[posx[k] - 1][posy[k]] = ' ';
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                                     count++;
+                                    generierePfeil(1);
                                     break;
+                                case '>':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] - 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '<':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] - 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '^':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] - 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case 'V':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k]] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] && posx[k] - 1 == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                             }
                             break;
                         case '^':
                             switch (spielfeld[posx[k]][posy[k] - 1]) {
                                 case '/':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k] - 1] = '>';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] - 1] = '>';
-                                        posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] + 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k]][posy[k] - 1] = '\\';
                                     }
+                                    posy[k] = posy[k] - 1;
+                                    posx[k] = posx[k] + 1;
                                     break;
                                 case '\\':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k] - 1] = '<';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] - 1][posy[k] - 1] = '<';
-                                        posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] - 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k]][posy[k] - 1] = '/';
                                     }
+                                    posy[k] = posy[k] - 1;
+                                    posx[k] = posx[k] - 1;
                                     break;
                                 case ' ':
                                     spielfeld[posx[k]][posy[k]] = ' ';
@@ -175,31 +267,76 @@ public class Spiegel {
                                 case 'O':
                                     spielfeld[posx[k]][posy[k]] = ' ';
                                     spielfeld[posx[k]][posy[k] - 1] = ' ';
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                                     count++;
+                                    generierePfeil(1);
                                     break;
+                                case '<':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] - 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] - 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '>':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] - 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] - 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '^':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] - 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] - 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case 'V':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] - 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] - 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                             }
                             break;
                         case 'V':
                             switch (spielfeld[posx[k]][posy[k] + 1]) {
                                 case '/':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] - 1][posy[k] + 1] = '<';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] - 1][posy[k] + 1] = '<';
-                                        posy[k] = posy[k] + 1;
-                                        posx[k] = posx[k] - 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k]][posy[k] + 1] = '\\';
                                     }
+                                    posy[k] = posy[k] + 1;
+                                    posx[k] = posx[k] - 1;
                                     break;
                                 case '\\':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k] + 1][posy[k] + 1] = '>';
                                     if (randm < drehwahrscheinlichkeit) {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] + 1] = '>';
-                                        posy[k] = posy[k] + 1;
-                                        posx[k] = posx[k] + 1;
-                                    } else {
-                                        spielfeld[posx[k]][posy[k]] = ' ';
+                                        spielfeld[posx[k]][posy[k] + 1] = '/';
                                     }
+                                    posy[k] = posy[k] + 1;
+                                    posx[k] = posx[k] + 1;
                                     break;
                                 case ' ':
                                     spielfeld[posx[k]][posy[k]] = ' ';
@@ -209,8 +346,55 @@ public class Spiegel {
                                 case 'O':
                                     spielfeld[posx[k]][posy[k]] = ' ';
                                     spielfeld[posx[k]][posy[k] + 1] = ' ';
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                                     count++;
+                                    generierePfeil(1);
                                     break;
+                                case '<':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] + 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] + 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '>':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] + 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] + 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case '^':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] + 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] + 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
+                                case 'V':
+                                    spielfeld[posx[k]][posy[k]] = ' ';
+                                    spielfeld[posx[k]][posy[k] + 1] = ' ';
+                                    for (int j = 0; j < posy.length; j++) {
+                                        if (posy[j] == posy[k] + 1 && posx[k] == posx[j]) {
+                                            posy[j] = 0;
+                                            posx[j] = 0;
+                                        }
+                                    }
+                                    posy[k] = 0;
+                                    posx[k] = 0;
                             }
                             break;
                     }
@@ -228,6 +412,6 @@ public class Spiegel {
         zufallZiele();
         generierePfeil(1);
         sv.step(spielfeld);
-        spiegelSimulation(20,0.3,5);
+        spiegelSimulation(100,1,5);
     }
 }

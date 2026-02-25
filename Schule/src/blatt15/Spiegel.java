@@ -112,6 +112,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '8') {
                                         break;
@@ -154,6 +155,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] + 1] == '8') {
                                         break;
@@ -281,35 +283,35 @@ public class Spiegel {
                                         }
                                         posy[k] = posy[k] - 1;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '\\') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] - 1] == '\\') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k]][posy[k] - 1] = '<';
+                                        spielfeld[posx[k]][posy[k] - 1] = '>';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
-                                            spielfeld[posx[k] + 1][posy[k] - 1] = '/';
+                                            spielfeld[posx[k] - 1][posy[k]] = '/';
+                                            spielfeld[posx[k] - 1][posy[k] - 1] = '/';
                                         }
                                         posy[k] = posy[k] - 1;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == 'O') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] - 1] == 'O') {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] - 1] = ' ';
+                                        spielfeld[posx[k] - 1][posy[k] - 1] = ' ';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
+                                            spielfeld[posx[k] - 1][posy[k]] = '/';
                                         }
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
                                         break;
-                                    } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '8') {
+                                    } else if (spielfeld[posx[k] - 1][posy[k] - 1] == '8') {
                                         break;
                                     } else {
                                         spielfeld[posx[k]][posy[k]] = ' ';
-                                        spielfeld[posx[k] + 1][posy[k] - 1] = '^';
+                                        spielfeld[posx[k] - 1][posy[k] - 1] = '^';
                                         if (randm < drehwahrscheinlichkeit) {
-                                            spielfeld[posx[k] + 1][posy[k]] = '\\';
+                                            spielfeld[posx[k] - 1][posy[k]] = '/';
                                         }
                                         posy[k] = posy[k] - 1;
-                                        posx[k] = posx[k] + 1;
+                                        posx[k] = posx[k] - 1;
                                         break;
                                     }
                                 case ' ':

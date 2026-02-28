@@ -260,6 +260,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] + 1] == '8') {
                                         break;
@@ -301,6 +302,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] - 1] == '8') {
                                         break;
@@ -404,6 +406,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] - 1] == '8') {
                                         break;
@@ -446,6 +449,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] - 1] == '8') {
                                         break;
@@ -549,6 +553,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] - 1][posy[k] + 1] == '8') {
                                         break;
@@ -591,6 +596,7 @@ public class Spiegel {
                                         posx[k] = 0;
                                         posy[k] = 0;
                                         count++;
+                                        generierePfeil(1);
                                         break;
                                     } else if (spielfeld[posx[k] + 1][posy[k] + 1] == '8') {
                                         break;

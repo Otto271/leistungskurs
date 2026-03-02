@@ -160,6 +160,5 @@ public class Steine {
         }
     }
     public static void main(String[] args) {
-        simuliere(100);
     }
 }

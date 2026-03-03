@@ -21,46 +21,36 @@ public class GameOfLife {
         for (int i = 0; i < feld.length; i++) {
             for (int j = 0; j < feld[i].length; j++) {
                 int lebend = 0;
-                int tod = 0;
                 if (Simulationen.getNorden(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getOsten(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getSueden(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getWesten(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getNordOst(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getSuedOst(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getSuedWest(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
                 }
                 if (Simulationen.getNordWest(feld, i, j, false) == '9') {
                     lebend++;
-                } else {
-                    tod++;
+                }
+                if (feld[i][j] == 'F' && lebend == 3) {
+                    feld[i][j] = '9';
+                } else if (feld[i][j] == '9' && lebend < 2) {
+                    feld[i][j] = 'F';
+                } else if (feld[i][j] == '9' && lebend > 3) {
+                    feld[i][j] = 'F';
                 }
             }
         }
@@ -69,6 +59,10 @@ public class GameOfLife {
         SchischVisualizer sv = new SchischVisualizer();
         initRandom(0.5);
         sv.step(feld);
+        for (int i = 0; i < 50; i++) {
+            weiter();
+            sv.step(feld);
+        }
         sv.start();
     }
 }

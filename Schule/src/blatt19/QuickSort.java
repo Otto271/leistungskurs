@@ -61,12 +61,12 @@ public class QuickSort {
         }
         return zusammen;
     }
-    public static int[] quickSort(int[] arr) {
+    /*public static int[] quickSort(int[] arr) {
         if (arr.length != 0) {
             int pivot = arr[0];
             int[] kUnso = trennenLinks(arr,0);
             int[] gUnso = trennenRechts(arr,0);
 
         }
-    }
+    }*/
 }

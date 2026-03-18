@@ -11,48 +11,6 @@ public class Smartphone {
     private int lautstaerke;
     private String os;
 
-    public void speicherLeeren(int maxSpeicher) {
-        this.speicher = maxSpeicher;
-    }
-
-    public void akkuLaden(int akku) {
-        if (akku <= 0) {
-            this.akku = 0;
-        } else if (akku > 100) {
-            this.akku = 100;
-        } else {
-            this.akku = akku;
-        }
-    }
-
-    public void einschalten() {
-        if (akku > 0) {
-            this.helligkeit = 10;
-        } else {
-            this.helligkeit = 0;
-        }
-    }
-
-    public boolean istAkkuLeer() {
-        if (this.akku == 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public void appInstallieren(int groesse) {
-        if (hatGenugSpeicher(groesse)) {
-            this.speicher -= groesse;
-        }
-    }
-
-    public boolean hatGenugSpeicher(int groesse) {
-        if (this.speicher < groesse) {
-            return false;
-        }
-        return true;
-    }
-
     public int getDisplaygroesse() {
         return displaygroesse;
     }
@@ -97,18 +55,6 @@ public class Smartphone {
         }
     }
 
-    public Smartphone(String marke, String modell, int akku, int speicher, int preis, int displaygroesse, int helligkeit, int lautstaerke, String os) {
-        this.marke = marke;
-        this.modell = modell;
-        this.akku = akku;
-        this.speicher = speicher;
-        this.preis = preis;
-        this.displaygroesse = displaygroesse;
-        this.helligkeit = helligkeit;
-        this.lautstaerke = lautstaerke;
-        this.os = os;
-    }
-
     public String getMarke() {
         return marke;
     }
@@ -145,5 +91,67 @@ public class Smartphone {
 
     public void setPreis(int preis) {
         this.preis = preis;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof Smartphone)) return false;
+        Smartphone s = (Smartphone) o;
+        return this.marke.equals(s.marke) && this.modell.equals(s.modell) && this.speicher == s.speicher && this.displaygroesse == s.displaygroesse && this.os.equals(s.os);
+    }
+
+    public void speicherLeeren(int maxSpeicher) {
+        this.speicher = maxSpeicher;
+    }
+
+    public void akkuLaden(int akku) {
+        if (akku <= 0) {
+            this.akku = 0;
+        } else if (akku > 100) {
+            this.akku = 100;
+        } else {
+            this.akku = akku;
+        }
+    }
+
+    public void einschalten() {
+        if (akku > 0) {
+            this.helligkeit = 10;
+        } else {
+            this.helligkeit = 0;
+        }
+    }
+
+    public boolean istAkkuLeer() {
+        if (this.akku == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void appInstallieren(int groesse) {
+        if (hatGenugSpeicher(groesse)) {
+            this.speicher -= groesse;
+        }
+    }
+
+    public boolean hatGenugSpeicher(int groesse) {
+        if (this.speicher < groesse) {
+            return false;
+        }
+        return true;
+    }
+
+    public Smartphone(String marke, String modell, int akku, int speicher, int preis, int displaygroesse, int helligkeit, int lautstaerke, String os) {
+        this.marke = marke;
+        this.modell = modell;
+        this.akku = akku;
+        this.speicher = speicher;
+        this.preis = preis;
+        this.displaygroesse = displaygroesse;
+        this.helligkeit = helligkeit;
+        this.lautstaerke = lautstaerke;
+        this.os = os;
     }
 }

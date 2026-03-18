@@ -1,32 +1,82 @@
 package blatt20.aufgabe5;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Benutzerkonto {
     private String benutzername;
     private String email;
-    private String geburtsdatum;
+    private java.util.Date geburtsdatum;
     private String passwort;
     private double guthaben;
-    private String datum;
+    private java.util.Date datum;
     private boolean angemeldet;
 
-    public Benutzerkonto(String benutzername, String datum, double guthaben, String passwort, String geburtsdatum, String email) {
+    public Benutzerkonto(String benutzername, Date datum, double guthaben, String passwort, Date geburtsdatum, String email) {
         this.benutzername = benutzername;
         this.datum = datum;
         this.guthaben = guthaben;
         this.passwort = passwort;
         this.geburtsdatum = geburtsdatum;
         this.email = email;
+        this.angemeldet = false;
+    }
+
+    public String getBenutzername() {
+        if (this.angemeldet) {
+            return benutzername;
+        } else  {
+            System.out.println("Erst anmelden!");
+            return "";
+        }
+    }
+
+    public String getEmail() {
+        if (this.angemeldet) {
+            return email;
+        } else   {
+            System.out.println("Erst anmelden!");
+            return "";
+        }
+    }
+
+    public Date getGeburtsdatum() {
+        if (this.angemeldet) {
+            return geburtsdatum;
+        } else  {
+            System.out.println("Erst anmelden!");
+            return null;
+        }
+    }
+
+    public Date getDatum() {
+        if (this.angemeldet) {
+            return datum;
+        } else {
+            System.out.println("Erst anmelden!");
+            return null;
+        }
+    }
+
+    public boolean isAngemeldet() {
+        return angemeldet;
     }
 
     public void anmelden(String benutzername, String passwort) {
-        if (!benutzername.equals(this.benutzername)) {
-            System.out.println("Falscher Benutzername!");
-        } else if (!passwort.equals(this.passwort)) {
-            System.out.println("Falsches Passwort!");
-        } else {
-            this.angemeldet = true;
+        if (!this.angemeldet) {
+            if (!benutzername.equals(this.benutzername)) {
+                System.out.println("Falscher Benutzername!");
+            } else if (!passwort.equals(this.passwort)) {
+                System.out.println("Falsches Passwort!");
+            } else {
+                this.angemeldet = true;
+            }
+        }
+    }
+
+    public void abmelden() {
+        if (this.angemeldet) {
+            this.angemeldet = false;
         }
     }
 
@@ -54,5 +104,7 @@ public class Benutzerkonto {
         }
     }
 
-
+    public void guthaben() {
+        System.out.println("Guthaben: " + this.guthaben + "€");
+    }
 }

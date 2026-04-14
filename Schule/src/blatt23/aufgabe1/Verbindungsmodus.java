@@ -1,6 +1,6 @@
 package blatt23.aufgabe1;
 
-public enum Verbindungsmodi {
+public enum Verbindungsmodus {
     OFFLINE,
     ONLINE,
     LOKAL

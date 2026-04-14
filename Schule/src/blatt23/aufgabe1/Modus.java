@@ -1,6 +1,6 @@
 package blatt23.aufgabe1;
 
-public enum Modi {
+public enum Modus {
     STANDBY,
     FEHLER,
     WARTUNG

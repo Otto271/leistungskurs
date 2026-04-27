@@ -7,12 +7,18 @@ public class Player {
     private Karten karteSt;
     private Karten karteP;
     private int sterne;
+    private int mengeS;
+    private int mengeSt;
+    private int mengeP;
 
     public Player() {
         this.karteS = Karten.SCHERE;
         this.karteSt = Karten.STEIN;
         this.karteP = Karten.PAPIER;
         this.sterne = 3;
+        this.mengeS = 4;
+        this.mengeSt = 4;
+        this.mengeP = 4;
     }
 
     public int getSterne() {
@@ -21,21 +27,21 @@ public class Player {
 
     public int getKartenMenge(Karten karten) {
         if (karten == Karten.SCHERE) {
-            return this.karteS.menge;
+            return this.mengeS;
         } else if (karten == Karten.STEIN) {
-            return this.karteSt.menge;
+            return this.mengeSt;
         } else {
-            return this.karteP.menge;
+            return this.mengeP;
         }
     }
 
     public void minusKarten(Karten karten) {
         if (karten == Karten.SCHERE) {
-            this.karteS.menge--;
+            this.mengeS--;
         } else if (karten == Karten.STEIN) {
-            this.karteSt.menge--;
+            this.mengeSt--;
         } else {
-            this.karteP.menge--;
+            this.mengeP--;
         }
     }
 
@@ -43,8 +49,12 @@ public class Player {
         this.sterne--;
     }
 
+    public void plusSterne() {
+        this.sterne++;
+    }
+
     public boolean checkKarten() {
-        if (this.karteS.menge == 0 &&  this.karteSt.menge == 0 && this.karteP.menge == 0) {
+        if (this.mengeS == 0 &&  this.mengeSt == 0 && this.mengeP == 0) {
             return true;
         }
         return false;
@@ -52,11 +62,11 @@ public class Player {
 
     public int kartenMenge(Karten karte) {
         if (karte == Karten.SCHERE) {
-            return this.karteS.menge;
+            return this.mengeS;
         }  else if (karte == Karten.STEIN) {
-            return this.karteSt.menge;
+            return this.mengeSt;
         } else {
-            return this.karteP.menge;
+            return this.mengeP;
         }
     }
 
@@ -89,6 +99,44 @@ public class Player {
                     minusKarten(Karten.PAPIER);
                     return Karten.PAPIER;
                 }
+            }
+        }
+    }
+
+    public void kampf(Player[] players, int j) {
+        Karten karte1 = this.random();
+        Karten karte2 = players[j].random();
+        if (karte1 == karte2) {
+            return;
+        } else if (karte1 == Karten.SCHERE) {
+            if (karte2 == Karten.STEIN) {
+                this.minusSterne();
+                players[j].plusSterne();
+                return;
+            } else if (karte2 == Karten.PAPIER) {
+                this.plusSterne();
+                players[j].minusSterne();
+                return;
+            }
+        } else if (karte1 == Karten.STEIN) {
+            if (karte2 == Karten.PAPIER) {
+                this.minusSterne();
+                players[j].plusSterne();
+                return;
+            } else if (karte2 == Karten.SCHERE) {
+                this.plusSterne();
+                players[j].minusSterne();
+                return;
+            }
+        } else if (karte1 == Karten.PAPIER) {
+            if (karte2 == Karten.STEIN) {
+                this.plusSterne();
+                players[j].minusSterne();
+                return;
+            } else  if (karte2 == Karten.SCHERE) {
+                this.minusSterne();
+                players[j].plusSterne();
+                return;
             }
         }
     }

@@ -23,11 +23,6 @@ public class Simulation {
         return reihenfolge;
     }
 
-    public void kampf(Player[] players, int i, int j) {
-        Karten karte1 = players[i].random();
-        Karten karte2 = players[j].random();
-    }
-
     public void sim(Player[] players) {
         while (checkEnd(players)) {
             int[] reihenfolge = reihe(players);

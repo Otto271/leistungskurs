@@ -2,18 +2,22 @@ package blatt28.aufgabe02;
 
 public class Main {
     public static void main(String[] args) {
-        Stapel <Integer> stapel = new Stapel <Integer>();
-        stapel.push(4);
-        stapel.push(5);
-        stapel.push(6);
-        Stapel <Integer> stapel2 = new Stapel<Integer>();
-        stapel2.push(4);
-        stapel2.push(5);
-        stapel2.push(6);
+        Warteschlange <Integer> stapel = new Warteschlange <Integer>();
+        stapel.add(4);
+        stapel.add(5);
+        stapel.add(6);
+        Warteschlange <Integer> stapel2 = new Warteschlange <Integer>();
+        stapel2.add(4);
+        stapel2.add(5);
+        stapel2.add(6);
         stapel.print();
         stapel2.print();
-        stapel.pop();
-        stapel2.pop();
+        stapel.poll();
+        stapel2.poll();
+        stapel.print();
+        stapel2.print();
+        stapel.duplicate();
+        stapel2.duplicate();
         stapel.print();
         stapel2.print();
     }

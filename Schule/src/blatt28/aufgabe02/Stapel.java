@@ -33,5 +33,22 @@ public class Stapel <T>{
         this.push(peek());
     }
 
+    public void swap() {
+        T a = this.pop();
+        T b = this.pop();
+        this.push(a);
+        this.push(b);
+    }
+
+    public void rotateLeft(int n) {
+        for (int i = 0; i < n; i++) {
+            T a = this.pop();
+            if (i == 0) {
+                this.arr.add(n, a);
+            } else {
+                this.arr.add(i, a);
+            }
+        }
+    }
 
 }

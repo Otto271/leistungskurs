@@ -7,19 +7,38 @@ import java.util.ArrayList;
 public abstract class Wesen {
     private int maxHP;
     private int curHP;
+    private int level;
+    private int exp;
+
     private int staerke;
     private int verteidigung;
     private int speed;
     private int glueck;
+
+    private Waffe waffe;
+    private Kopf kopf;
+    private Ruestung ruest;
+
+    private ArrayList <Status> status;
     private ArrayList <Item> items;
 
-    public Wesen(int maxHP, int curHP, int staerke, int verteidigung, int speed, int glueck) {
+    public Wesen(int maxHP, int level, int staerke, int verteidigung, int speed, int glueck) {
         this.maxHP = maxHP;
-        this.curHP = curHP;
+        this.curHP = this.maxHP;
+        this.level = level;
+        this.exp = 0;
+
         this.staerke = staerke;
         this.verteidigung = verteidigung;
         this.speed = speed;
         this.glueck = glueck;
+
+        this.waffe = null;
+        this.kopf = null;
+        this.ruest = null;
+
+        this.status = new ArrayList<Status>();
+        this.items = new ArrayList<Item>();
     }
 
     public int getMaxHP() {
@@ -71,22 +90,138 @@ public abstract class Wesen {
     }
 
     public boolean treffer(Wesen w) {
-        double a = (double) (this.getSpeed()/w.getSpeed());
-        if (Math.random() < a) {
+        if (w.status.contains(Status.SCHLAF)) {
+            //hit
             return true;
+        }
+
+        double a = (double) (this.speed / w.getSpeed());
+        double b = 0;
+        if (a < 1) {
+            b = 0.1;
+            if (a < 0.9) {
+                b = 0.2;
+            }
+            if (a < 0.8) {
+                b = 0.3;
+            }
+            if (a < 0.7) {
+                b = 0.4;
+            }
+        } else if (a > 1) {
+            b = 0.1;
+            if (a > 1.1) {
+                b = 0.07;
+            }
+            if (a > 1.2) {
+                b = 0.05;
+            }
+            if (a > 1.3) {
+                b = 0.03;
+            }
+        }
+        if (Math.random() < b) {
+            //hit
+            return true;
+        } else {
+            //dodge
+            return false;
+        }
+    }
+
+    public void schaden(int schaden) {
+        if (schaden <= 0) {
+            System.out.println("WEAK!");
+        } else {
+            if (schaden >= this.curHP) {
+                this.curHP = 0;
+                System.out.println("DEFEAT!");
+            } else {
+                this.curHP -= schaden;
+            }
+        }
+    }
+
+    public void angriff(Wesen w) {
+        if (treffer(w)) {
+            if (Math.random() < (double) (this.glueck / 5)) {
+                w.schaden(4*this.staerke);
+                System.out.println("Krit!");
+            } else {
+                w.schaden(2*this.staerke - 2*w.verteidigung);
+                System.out.println("Hit!");
+            }
+        }
+    }
+
+    public void updateStats(Ausruestung a, boolean add) {
+        if (add) {
+            this.staerke += a.getStr();
+            this.verteidigung += a.getVit();
+            this.speed += a.getDex();
+            this.glueck += a.getLck();
+        } else {
+            this.staerke -= a.getStr();
+            this.verteidigung -= a.getVit();
+            this.speed -= a.getDex();
+            this.glueck -= a.getLck();
+        }
+    }
+
+    public boolean setWaffe(Waffe w) {
+        if (this.waffe == null) {
+            this.waffe = w;
+            updateStats(w, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setKopf(Kopf k) {
+        if (this.kopf == null) {
+            this.kopf = k;
+            updateStats(k, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean setRuest(Ruestung r) {
+        if (this.ruest == null) {
+            this.ruest = r;
+            updateStats(r, true);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean ausruesten(Ausruestung a) {
+        if (this.getClass() == a.getKlasse()) {
+            if (a.getClass() == Waffe.class) {
+                return setWaffe((Waffe) a);
+            } else if (a.getClass() == Kopf.class) {
+                return setKopf((Kopf) a);
+            } else if (a.getClass() == Ruestung.class) {
+                return setRuest((Ruestung) a);
+            }
         }
         return false;
     }
 
-    public Wesen angriff(Wesen w) {
-        if (treffer(w)) {
-            if (Math.random() < (double) this.getGlueck() / 100) {
-                w.setCurHP(w.getCurHP() - 4*this.getStaerke());
-            } else {
-                w.setCurHP(w.getCurHP() - 4*this.getStaerke() - 2*w.getVerteidigung());
-            }
+    public void ablegen(int i) {
+        if (i == 0) {
+            this.updateStats(this.waffe, false);
+            this.waffe = null;
+        }else if (i == 1) {
+            this.updateStats(this.kopf, false);
+            this.kopf = null;
+        } else if (i == 2) {
+            this.updateStats(this.ruest, false);
+            this.ruest = null;
         }
-        return w;
     }
 
     public void sammeln() {

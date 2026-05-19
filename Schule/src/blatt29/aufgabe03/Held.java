@@ -13,9 +13,4 @@ public class Held extends Wesen {
         this.mStaerke = mStaerke;
         this.mVerteidigung = mVerteidigung;
     }
-
-    public Gegner angriff(Gegner g) {
-        g.setCurHP(g.getCurHP() - super.schaden(this, g));
-        return g;
-    }
 }

@@ -49,4 +49,37 @@ public class Node {
         neighbours[1] = current;
         return neighbours;
     }
+
+    public Node remove(int wert) {
+        Node current = this;
+        while (current != null) {
+            if (wert < current.getWert()) {
+                current = current.getLeft();
+            } else if (wert > current.getWert()) {
+                current = current.getRight();
+            } else {
+                Node temp = current;
+                if (current.getLeft() == null &&  current.getRight() == null) {
+                    current = null;
+                    return temp;
+                } else if (current.getLeft() == null || current.getRight() == null) {
+                    if (current.getLeft() == null) {
+                        current = current.getRight();
+                        return temp;
+                    } else {
+                        current = current.getLeft();
+                        return temp;
+                    }
+                } else {
+                    Node[] neighbours = current.findInOrderNeighbour();
+                    current = neighbours[0];
+                    return temp;
+                }
+            }
+        }
+        return null;
+    }
+    public int depth() {
+        return 0;
+    }
 }

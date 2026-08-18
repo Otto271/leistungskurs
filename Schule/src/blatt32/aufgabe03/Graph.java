@@ -1,69 +1,67 @@
 package blatt32.aufgabe03;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Graph {
-    int [][] graph;
+
+    private int[][] adjazenzmatrix;
 
     public Graph() {
-        this.graph = new int[0][0];
+        this.adjazenzmatrix = new int[0][0];
     }
 
-    public Graph(int mengeKnoten) {
-        this.graph = new  int[mengeKnoten][mengeKnoten];
+    public Graph(int size) {
+        this.adjazenzmatrix = new int[size][size];
     }
 
     public void addVertex() {
-        int [][] newGraph = new int [this.graph.length+1][this.graph.length+1];
-        for (int i = 0; i < this.graph.length; i++) {
-            for (int j = 0; j < this.graph[i].length; j++) {
-                newGraph[i][j] = this.graph[i][j];
+        int[][] adj = new int[this.adjazenzmatrix.length + 1][this.adjazenzmatrix.length + 1];
+
+        for (int i = 0; i < this.adjazenzmatrix.length; i++) {
+            for (int j = 0; j < this.adjazenzmatrix.length; j++) {
+                adj[i][j] = this.adjazenzmatrix[i][j];
             }
         }
-        this.graph = newGraph;
+
+        this.adjazenzmatrix = adj;
     }
 
-    public void addEdge(int from, int to) {
-        this.graph[to][from] = 1;
-        this.graph[from][to] = 1;
-    }
+    public void addEdge(int from, int to, int weight, boolean isDirected) {
+        if (from == to || from < 0 || to < 0 || to >= adjazenzmatrix.length || from >= adjazenzmatrix.length || weight < 0) {
+            throw new IllegalArgumentException();
+        }
 
-    public void addEdge(int from, int to, boolean isDirected) {
         if (isDirected) {
-            this.graph[to][from] = 1;
+            this.adjazenzmatrix[from][to] = weight;
         } else {
-            this.graph[to][from] = 1;
-            this.graph[from][to] = 1;
+            this.adjazenzmatrix[from][to] = weight;
+            this.adjazenzmatrix[to][from] = weight;
         }
     }
 
     public void addEdge(int from, int to, int weight) {
-        this.graph[to][from] = weight;
-        this.graph[from][to] = weight;
+        this.addEdge(from, to, weight, false);
     }
 
-    public void addEdge(int from, int to, int weight, boolean isDirected) {
-        if (isDirected) {
-            this.graph[to][from] = weight;
-        } else {
-            this.graph[to][from] = weight;
-            this.graph[from][to] = weight;
-        }
+    public void addEdge(int from, int to) {
+        this.addEdge(from, to, 1, false);
     }
 
-    public int[] size() {
-        int[] dimension =new int[] {this.graph.length, this.graph[0].length};
-        return dimension;
+    public void addEdge(int from, int to, boolean isDirected) {
+        this.addEdge(from, to, 1, isDirected);
+    }
+
+    public int size() {
+        return this.adjazenzmatrix.length;
     }
 
     public boolean isWeighted() {
-        for (int i = 0; i < this.graph.length; i++) {
-            for (int j = 0; j < this.graph[i].length; j++) {
-                if (this.graph[i][j] > 1) {
+        for (int i = 0; i < this.adjazenzmatrix.length; i++) {
+            for (int j = 0; j < this.adjazenzmatrix.length; j++) {
+                if (this.adjazenzmatrix[i][j] > 1) {
                     return true;
                 }
             }
@@ -71,60 +69,174 @@ public class Graph {
         return false;
     }
 
-    //public boolean isDirected() {}
-
-    public int[][] getAdjacencyMatrix() {
-        return this.graph.clone();
-    }
-
-    public ArrayList<Integer> getNeighbours(int knoten) {
-        ArrayList <Integer> neighbours = new ArrayList<Integer>();
-        for (int i = 0; i < this.graph[knoten].length; i++) {
-            if (this.graph[knoten][i] > 0) {
-                neighbours.add(i);
+    public boolean isDirected() {
+        for (int i = 0; i < this.adjazenzmatrix.length; i++) {
+            for (int j = i + 1; j < this.adjazenzmatrix.length; j++) {
+                if (adjazenzmatrix[i][j] != adjazenzmatrix[j][i]) {
+                    return false;
+                }
             }
         }
+        return true;
+    }
+
+    public int[][] getAdjacencyMatrix() {
+        int[][] adj = new int[adjazenzmatrix.length][adjazenzmatrix.length];
+        for (int i = 0; i < adjazenzmatrix.length; i++) {
+            for (int j = 0; j < adjazenzmatrix.length; j++) {
+                adj[i][j] = adjazenzmatrix[i][j];
+            }
+        }
+
+        return adj;
+    }
+
+    public int[] getNeighbours(int node) {
+        if (node < 0 || node >= adjazenzmatrix.length) {
+            throw new IllegalArgumentException();
+        }
+
+        int count = 0;
+        for (int i = 0; i < adjazenzmatrix.length; i++) {
+            if (adjazenzmatrix[node][i] > 0) {
+                count++;
+            }
+        }
+
+        int[] neighbours = new int[count];
+        int z = 0;
+        for (int i = 0; i < adjazenzmatrix.length; i++) {
+            if (adjazenzmatrix[node][i] > 0) {
+                neighbours[z] = adjazenzmatrix[node][i];
+                z++;
+            }
+        }
+
         return neighbours;
     }
 
-    public void exportHTML() throws IOException {
-        File f = new File("io\\Adjazenzmatrix.html");
-        FileWriter fw = new FileWriter(f);
-        fw.write("""
-                <!DOCTYPE html>
-                <html>
-                <head>
-                <title>Graph</title>
-                </head>
-                <body>
-                <h1>Graph</h1>
-                <table>
-                """);
-        for (int i = 0; i < this.graph[0].length; i++) {
-            fw.write("<tr>");
-            for (int j = 0; j < this.graph.length; j++) {
-                fw.write("""
-                        <td>"""+this.graph[j][i]+ "</td>" +
-                        "</tr>");
+    public void exportHTML() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat timeOnly = new SimpleDateFormat("HH-mm-ss");
+        Date d = cal.getTime();
+        String t = dateOnly.format(d);
+        String ts = t + "-" + timeOnly.format(d);
+
+        File f = new File(ts + "_table.html");
+        try {
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write("<!DOCTYPE html>");
+            bw.newLine();
+            bw.write("<html>");
+            bw.newLine();
+            bw.write("<head>");
+            bw.newLine();
+            bw.write("<meta charset=\"utf-8\"><title>Adjazenzmatrix</title>");
+            bw.newLine();
+            bw.write("</head>");
+            bw.newLine();
+            bw.write("<body>");
+            bw.newLine();
+            bw.write("<h1>Adjazenzmatrix</h1>");
+            bw.newLine();
+            bw.write("<table border=\"1\">");
+            bw.newLine();
+
+            bw.write("<tr>");
+            bw.newLine();
+            bw.write("<td></td>");
+            bw.newLine();
+            for (int i = 0; i < adjazenzmatrix.length; i++) {
+                bw.write("<td>" + (char) ((int) 'A' + i) + "</td>");
+                bw.newLine();
             }
+            bw.write("</tr>");
+            bw.newLine();
+
+            for (int i = 0; i < adjazenzmatrix.length; i++) {
+                bw.write("<tr>");
+                bw.newLine();
+                bw.write("<td>" + (char) ((int) 'A' + i) + "</td>");
+                bw.newLine();
+                for (int j = 0; j < adjazenzmatrix.length; j++) {
+                    bw.write("<td>" + adjazenzmatrix[i][j] + "</td>");
+                    bw.newLine();
+                }
+                bw.write("</tr>");
+                bw.newLine();
+            }
+            bw.write("</table>");
+            bw.newLine();
+
+
+            bw.write("</body>");
+            bw.newLine();
+            bw.write("</html>");
+
+            bw.close();
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        fw.write("""
-                </table>
-                </body>
-                </html>
-                """);
-        fw.close();
+
     }
 
-    public void exportGraph() throws IOException {
-        File f = new File("io\\Graph.txt");
-        BufferedWriter bw = new  BufferedWriter(new FileWriter(f));
-        bw.write(size()[0] + " " + size()[1]);
-        for (int i = 0; i < this.graph[0].length; i++) {
+    public void exportGraph(String filename) {
+        File f = new File(filename + ".txt");
+        try {
+            FileWriter fw = new FileWriter(f);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write(""+size());
             bw.newLine();
-            for (int j = 0; j < this.graph.length; j++) {
-                bw.write(graph[j][i] + " ");
+            for (int i = 0; i < adjazenzmatrix.length; i++) {
+                for (int j = 0; j < adjazenzmatrix.length; j++) {
+                    bw.write(""+adjazenzmatrix[i][j]);
+                    bw.newLine();
+                }
             }
+
+            bw.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    public void importGraph(String filename) {
+        File f = new File(filename + ".txt");
+        try {
+            FileReader fr = new FileReader(f);
+            BufferedReader br = new BufferedReader(fr);
+
+            int size = 0;
+            if (br.ready()) {
+                size = Integer.parseInt(br.readLine());
+            }
+
+            int[][] adj = new int[size][size];
+
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (br.ready()) {
+                        adj[i][j] = Integer.parseInt(br.readLine());
+                    } else {
+                        throw new RuntimeException();
+                    }
+                }
+            }
+
+            br.close();
+
+            this.adjazenzmatrix = adj;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

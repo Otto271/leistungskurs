@@ -1,5 +1,8 @@
 package blatt33.aufgabe05;
 
+import java.sql.SQLOutput;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class GraphSuche {
@@ -33,28 +36,52 @@ public class GraphSuche {
         return 0;
     }
 
-    public void zyklensuche(int[][] matrix) {
+    public void zyklensuche(int[][] matrix, int x) {
         Stack<Integer> stack = new Stack<>();
         boolean[] visited = new boolean[matrix.length];
         for(int i = 0; i < matrix.length; i++) {
             visited[i] = false;
         }
-        stack.push(0);
-        visited[0] = true;
+        stack.push(x);
+        visited[x] = true;
         boolean flag = false;
         while(!stack.isEmpty()) {
-            int x = stack.pop();
+            int y = stack.pop();
             for(int i = 0; i < matrix.length; i++) {
-                if(!visited[i] && matrix[x][i] > 0) {
+                if(!visited[i] && matrix[y][i] > 0) {
                     stack.push(i);
                     visited[i] = true;
-                } else if(visited[i] && matrix[x][i] > 0) {
+                } else if(visited[i] && matrix[y][i] > 0) {
                     flag = true;
                 }
             }
         }
         if(flag) {
             System.out.println("Zyklus gefunden!");
+        }
+    }
+
+    public void erreichbarkeit(int[][] matrix, int x) {
+        Queue <Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[matrix.length];
+        for(int i = 0; i < matrix.length; i++) {
+            visited[i] = false;
+        }
+        queue.add(x);
+        visited[x] = true;
+        while(!queue.isEmpty()) {
+            int y = queue.poll();
+            for(int i = 0; i < matrix.length; i++) {
+                if(!visited[i] && matrix[y][i] > 0) {
+                    queue.add(i);
+                    visited[i] = true;
+                }
+            }
+        }
+        for(int i = 0; i < matrix.length; i++) {
+            if(!visited[i]) {
+                System.out.println(i + " ist nicht erreichbar!");
+            }
         }
     }
 }

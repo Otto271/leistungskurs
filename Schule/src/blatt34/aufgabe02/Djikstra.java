@@ -3,6 +3,7 @@ package blatt34.aufgabe02;
 import java.util.ArrayList;
 
 public class Djikstra {
+    /*
     public int[][] dijkstra(int[][] matrix, int start) {
         int[][] wege = new int[matrix.length][3];
         ArrayList<Integer> L = new ArrayList<>();
@@ -21,5 +22,5 @@ public class Djikstra {
                 }
             }
         }
-    }
+    }*/
 }
